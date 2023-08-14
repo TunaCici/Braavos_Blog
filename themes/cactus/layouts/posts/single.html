@@ -9,7 +9,7 @@
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
     {{ if $.Params.header_image_alt }}
-      <img src="header.jpg" class="hero" alt="{{ $.Params.header_image_alt }}" />
+      <img src="header.png" class="hero" alt="{{ $.Params.header_image_alt }}" />
     {{end}}
 
       <h1 class="posttitle" itemprop="name headline">
@@ -70,33 +70,19 @@
 	<div class="post-footer">
 		<hr />
 
-		<img src="/signature.png" alt="signature" style="height: 55px;" />
+		<img src="/blog/signature.png" alt="signature" style="height: 55px;" />
 
-		<p>Thanks for reading! <span style="font-style: normal;">😍</span></p>
+		<p>Thanks for reading & Take care <span style="font-style: normal;"> ❤ </span></p>
 		<p>
-			If you like my writing, consider following me on
-			<a href="https://twitter.com/joonas_fi">Twitter</a>.
+			Follow me on
+			<a href="https://twitter.com/tunacicii">X (formerly Twitter)</a>,
+      if you like my works that is >.<
 		</p>
 
-		<p>
-			Stay updated on my blog posts &amp; projects - sign up for
-			<a href="https://buttondown.email/joonas">my newsletter</a>. 🚀
-			<br />
-			<small>
-				No spam, unsubscribe any time.
-				<a href="/feed.xml">RSS</a> also available.
-			</small>
-		</p>
 	</div>
   </article>
 
   <hr />
-
-  {{ partial "disqus.html" . }}
-
-  {{/* Jekyll used to use "/2018/12/28/pet-peeve-if-and-only-if" as Disqus thread id (without slash
-       in the end), and therefore we can't use this internal disqus thing but have to use custom instead */}}
-  {{/* {{ template "_internal/disqus.html" . }} */}}
 
   {{ partial "page_nav_mobile.html" . }}
 
@@ -105,9 +91,9 @@
   </div>
 </body>
 
-<link rel="stylesheet" href={{ "/lib/font-awesome/css/all.min.css" | relURL }}>
-<script src={{ "/lib/jquery/jquery.min.js" | relURL }}></script>
-<script src={{ "/js/main.js" | relURL }}></script>
+<link rel="stylesheet" href={{ "/blog/lib/font-awesome/css/all.min.css" | relURL }}>
+<script src={{ "/blog/lib/jquery/jquery.min.js" | relURL }}></script>
+<script src={{ "/blog/js/main.js" | relURL }}></script>
 {{ $mathjax := false }}
 {{ if isset .Params "mathjax" }}
   {{ $mathjax = .Params.mathjax }}
