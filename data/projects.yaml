@@ -1,16 +1,16 @@
 list:
-  - name: Varasto
-    url: https://function61.com/varasto/
-    desc: All your files in one simple, replicated, encrypted place - with built-in backups and configurable ransomware protection.
+  - name: WesterOS
+    url: https://github.com/TunaCici/WesterOS
+    desc: Hobbyist operating system /w a micro kernel design for QEMU ARM[64] Virt machines. Still in [very] early development.
+  
+  - name: QEMU_Starter
+    url: https://github.com/TunaCici/QEMU_Starter
+    desc: Pseudo-wiki; offering guides, tutorials, and examples for new QEMU users. More of a teaching/helping project rather than a software.
 
-  - name: Emergency details printout
-    url: https://joonas.fi/emergency-details-printout/
-    desc: Website for printing an "emergency details" paper for helping deal with situations that need quick attention
+  - name: Mhysa
+    url: https://github.com/TunaCici/Mhysa
+    desc: Collection of popular algorithms, data structures, utilities and helper functions. Written using C++20 and CMake. Basically a brain-dump of codes.
 
-  - name: Complaint corner
-    url: /complaint-corner/
-    desc: I don't want to flood my blog with negativity, so I have a dedicated section to air out my grievances
-
-  - name: function61.com
-    url: https://function61.com/
-    desc: My company
+  - name: Braavos
+    url: https://github.com/TunaCici/Braavos
+    desc: Terminal themed front-end web application written using React.js. Currently used for my personal website. Just for fun.

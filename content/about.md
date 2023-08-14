@@ -2,42 +2,44 @@
 title: About
 ---
 
-![Picture of me](/images/me.jpg)
+![Picture of me with an R35](blog/images/me.jpeg)
 
-My name is Joonas, and I'm a software engineer from Finland. I run
-[function61.com](https://function61.com/). For my open source work,
-see the GitHub link on the top of this page.
+Picture of me with an R35 (i have obsession)
 
-My interests are:
+Hi I'm Tuna, your underground software dealer from [Night City](https://cyberpunk.fandom.com/wiki/Night_City).
+If you would like to see some of my work, either visit one of the above [contact] links or my [GitHub](https://github.com/TunaCici) thingy.
 
-- Improving software architecture, EventSourcing / CQRS
-- [Homelabbing](https://www.reddit.com/r/homelab/), [home automation](https://github.com/function61/hautomo) and [data hoarding](https://www.reddit.com/r/DataHoarder/)
-- Distributed systems, [infrastructure software](https://github.com/function61/fn61-opencompany)
-- Learning better programming languages (Golang, Rust)
-- Raspberry Pi, Arduino etc. various electronics projects
+I **love**:
 
-I am inspired by these people:
+- Desiging software [architectures] & vibing with the code (C++ my beloved)
+- Low-level [embedded] programming ("iso C will never destroyed")
+- Tinkering with hardware (my good-old raspberry pi & poor-old 'gaming' pc)
+- Illustrations & Content-creation (i'm no good at it, but nvm that)
+- Ricing the hell out of my Archy [Linux] machine (no i won't say it)
 
-- [Jessie Frazelle](https://twitter.com/jessfraz) (wrote her own "even GUI apps are containers" -based OS)
-- [Michael Stapelberg](https://twitter.com/zekjur) ("My router doesn't work? I'll write my own networking software for it then..")
-- [Ben Cox](https://twitter.com/Benjojo12) ("my USB device isn't supported by modern Linux? I'll reverse engineer and write my own USB drivers for it then..")
-- [LiveOverflow](https://twitter.com/LiveOverflow) (teaches about software security via exploits)
-- [Catalin Cimpanu](https://twitter.com/campuscodi) (security reporter)
-- [Julia Evans](https://twitter.com/b0rk) (awesome teaching comics about software tools)
-- [Matt D'Avella](https://www.youtube.com/channel/UCJ24N4O0bP7LGLBDvye7oCA) (self development, essentialism)
-- [Wintergatan](https://www.youtube.com/channel/UCcXhhVwCT6_WqjkEniejRJQ) (a modern day genius: music, engineering, videography, endless curiosity with a can-do attitude)
-- [Most of the channels I follow on YouTube](https://www.youtube.com/channel/UClJfgjn1WLmZbXi81xUDxQA/channels)
-- [Most of the people I follow in Twitter](https://twitter.com/joonas_fi/following)
+*and when I say "love", I mean "addicted"*
 
-Software I really like (I'm not getting paid to say any of these):
+I am **inspired** by these people (not limited to):
 
-- [Sublime Text](https://www.sublimetext.com/)
-- [Docker](https://www.docker.com/)
-- [Hugo](https://gohugo.io/)
-- [Bootstrap](https://getbootstrap.com/)
-- [ScreenToGif](https://www.screentogif.com/)
-- [TortoiseHg](https://tortoisehg.bitbucket.io/) (Mercurial VCS GUI - you can also pull/push Git repos)
+- [Onur Mutlu](https://people.inf.ethz.ch/omutlu) (a god of [modern] computer architecture imo)
+- [Steve Jobs](https://www.apple.com/stevejobs) (not much to say here)
+- [Julia Evans](https://twitter.com/b0rk) (awesome software illustrations & writing)
+- [Тsфdiиg](https://twitter.com/tsoding) (such a cool & fun person - watch his [videos](https://www.youtube.com/c/tsoding/videos))
+- [Asahi Lina](https://twitter.com/LinaAsahi) (M1 GPU driver for Linux on Macs - i'm a 'fan')
+- [Call Me Kevin](https://www.youtube.com/@CallMeKevin) (the definition of chaotic good)
+- [Daenerys Targaryen](https://gameofthrones.fandom.com/wiki/Daenerys_Targaryen) (fire & blood)
+- [Fred Again](https://www.fredagain.com) (i adore his work & helped me through some tough times)
 
-Bonus content (in Finnish):
+Software I really like (#notsponsored):
 
-- [Hauskoja liikeidea-nimiä](/fi/sekalaista/hauskoja-liikeidea-nimia/) (eng: business idea puns)
+- [QEMU](https://www.qemu.org) (open source machine emulator and virtualizer)
+- [UTM](https://getutm.app) (virtual machine manager for Apple Devices)
+- [Kitty](https://sw.kovidgoyal.net/kitty) (an amazing cross-platform terminal emulator)
+- [exa](https://the.exa.website) (modern & colorful replacement for `ls`)
+
+Hardware I adore (#notsponsored, duh):
+
+- Almost anything [Apple](https://www.apple.com/apple-vision-pro/) makes
+- [Mohit Bhoite's](https://twitter.com/MohitBhoite), *what he calls*, sculptures. They are **extremely** aesthetic
+
+*This blog is heavily referenced from [joonas.fi](https://joonas.fi). Thanks for everything, Joonas!*

@@ -1,41 +1,42 @@
-baseURL: https://joonas.fi/
+baseURL: https://tunacici.com/blog/
 languageCode: en-us
-title: joonas.fi
+title: tunacici
 theme: cactus
 permalinks:
   posts: /:year/:month/:title/
 params:
-  author: Joonas
-  gravatar: pompo500@xs.fi
-  description: "Let’s get to work ᕕ( ᐛ )ᕗ"
-  rss: true
+  author: Tuna
+  gravatar: tunacici7@gmail.com
+  description: "Enjoy Life!"
+  colortheme: "white"
   tagsOverview: true
   showallpostsonhomepage: true
   css:
     - "css/custom.css"
   social:
     - name: twitter
-      link: https://twitter.com/joonas_fi
+      link: https://twitter.com/tunacicii
     - name: github
-      link: https://github.com/function61/
-    - name: stack-overflow
-      link: https://stackoverflow.com/users/2176740/joonas-fi
+      link: https://github.com/TunaCici
+    - name: discord
+      link: http://discordapp.com/users/tunacici
     - name: linkedin
-      link: https://www.linkedin.com/in/joonas-fi/
-    - name: rss
-      link: /feed.xml
-  googleAnalyticsAsync: true
-
-googleAnalytics: 'UA-24122659-1'
-
-DisqusShortname: 'joonas-fi'
+      link: https://www.linkedin.com/in/tuna-cici/
+    - name: mastodon
+      link: https://mastodon.social/@tunacici
+    - name: email
+      link: tunacici7@gmail.com
+    - name: youtube
+      link: https://www.youtube.com/channel/UCNwIa51m79c7r36RwPfeLMQ
+    - name: medium
+      link: https://medium.com/@tunacici7
 
 menu:
   main:
     - name: Home
       url: /
       weight: 1
-    - name: Today I Learned
+    - name: Memes
       url: /today-i-learned/
       weight: 2
     - name: About
