@@ -14,20 +14,26 @@ If you ever meddled with software development, you are sure to heard about them.
 **TLDR;**
 =========
 
-```
-**Host:** The operating system that runs the virtual machine or the emulator.  
-**Guest:** The virtualized/emulated software that runs on the host operating system.**Virtualization**: Creation of a simulated environment for a software, like an operating system. Uses host's dedicated CPU, RAM and I/O capabilities. Makes running multiple operating systems on a single hardware possible.**Emulation**: Creation of a simulated enviroment for a device, like the Playstation 1. Simulates both it's architecture (ARM/x86), software (OS) and hardware (CPU, I/O). Makes running different devices/softwares on a different device possible.**Notes:  
-**1\. Virtualization runs on a layer called Hypervisor.  
-2\. Virtualization needs to be supported on hardware level (Intel® VT or AMD-V)  
-3\. Virtualization is faster since it is hardware supported and uses the same architecture as the hosts. (no interpretation)  
-4\. Emulations have big uses in embedded systems and dev kits.  
-5\. Emulating a device/software requires reverse-engineering.  
-6\. Emulations can be considered illegal. (Eg. Nintendo Switch)  
-7\. Emulations are slower because of the CPU interpreter.
+```text
+Host: The operating system that runs the virtual machine or the emulator.  
+Guest: The virtualized/emulated software that runs on the host operating system.
+Virtualization: Creation of a simulated environment for a software, like an operating system. Uses host's dedicated CPU, RAM and I/O capabilities. Makes running multiple operating systems on a single hardware possible.
+Emulation: Creation of a simulated enviroment for a device, like the Playstation 1. Simulates both it's architecture (ARM/x86), software (OS) and hardware (CPU, I/O). Makes running different devices/softwares on a different device possible.
+
+Notes:  
+1. Virtualization runs on a layer called Hypervisor.  
+2. Virtualization needs to be supported on hardware level (Intel® VT or AMD-V)  
+3. Virtualization is faster since it is hardware supported and uses the same architecture as the hosts. (no interpretation)  
+4. Emulations have big uses in embedded systems and dev kits.  
+5. Emulating a device/software requires reverse-engineering.  
+6. Emulations can be considered illegal. (Eg. Nintendo Switch)  
+7. Emulations are slower because of the CPU interpreter.
 ```
 
 Virtualization
 ==============
+
+![](two-vm.png)
 
 Two Virtual Machines Running on macOS
 
@@ -37,16 +43,20 @@ Virtualization comes to your rescue! Instead of installing Ubuntu directly onto 
 
 Virtual machines allows you to install and run different operating systems without restarting your computer. They use your computers hardware resources like CPU, RAM, HDD, network or I/O devices. These resources are given to the virtual machine (guest) by your operating system (host). For example, you can choose to dedicate 2 CPU cores, 2GB RAM, 50GB HDD space and 24Mbit/s network speed.
 
+![](basic-layered-vm-arch.jpeg)
+
 Basic Layered Architecture of a Virtual Machine — Source: ufsexplorer.com
 
-The guest can be installed like you normally do on a physical computer. You boot the .img file. You follow the operating system’s installation steps and that’s it. You now have a “full” operating system.
+The guest can be installed like you normally do on a physical computer. You boot the `.img` file. You follow the operating system’s installation steps and that’s it. You now have a “full” operating system.
 
-Like anything in a software, there are some limitations to the virtual machines. Since they run on top of your operating system, they can’t make use of the full hardware. Thus, they have lower performance when compared to natively on the computer. Other big limitation is the system architecture. Virtual machines can’t run operating systems that have different system architecture than the host. For example, if your CPU is ARM then you can only install ARM operating systems. You can’t install x86\_64 or anything else.
+Like anything in a software, there are some limitations to the virtual machines. Since they run on top of your operating system, they can’t make use of the full hardware. Thus, they have lower performance when compared to natively on the computer. Other big limitation is the system architecture. Virtual machines can’t run operating systems that have different system architecture than the host. For example, if your CPU is ARM then you can only install ARM operating systems. You can’t install x86_64 or anything else.
 
 For running operating system that have different architectures, you need look for something different. You need to look for an emulator.
 
 Emulation
 =========
+
+![](emulation.jpeg)
 
 Nintendo Switch Emulation — Source: businessinsider.com
 
@@ -56,6 +66,8 @@ Now, let’s say I don’t want to buy a Playstation. I have a powerful desktop 
 
 Congratulations my friend, you just did an emulation. You mimicked the hardware and the software. Your own machine basically runs a real copy of the Playstation. Let’s move on to the technical definition and details.
 
+![](emulated-16bit-pc.png)
+
 An Emulated 16-bit CPU— Source: hackaday.io
 
 Emulation, is a software behaving like another device or a machine. It uses the hosts hardware resources to create another hardware. Since it creates a whole new hardware, there is no architecture limitations. Any machine system, in theory, can emulate any machine. Your gaming Windows machine can emulate the Playstation 2, Nintendo Switch, Raspberry Pi, an Android device, mouse, keyboard, fridge, dishwasher or basically anything.
@@ -63,6 +75,8 @@ Emulation, is a software behaving like another device or a machine. It uses the 
 The process of emulation something is very time-consuming. You need to reverse-engineer the system you want to emulate. Write low-level codes and maybe even create simulated environments. When it comes to emulation, there is no easy task. Everything requires great system resources like a high-end CPU, fast GPU and RAM.
 
 With advancing technology, emulating a hardware is becoming a more easier and accessible. There are emulators of old gaming consoles like Xbox 360, Playstation 2 and Atari. All of them needs powerful computers to run. The use cases of an emulation is not very consumer targeted. They are used in embedded world to develop and debug software without having access to a real hardware.
+
+![](arduino.jpeg)
 
 Popular Embedded Boards Like Arduino — Source: unplash.com by Harrison Broadbent
 
