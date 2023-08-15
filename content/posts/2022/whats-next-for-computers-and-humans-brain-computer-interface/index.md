@@ -1,9 +1,10 @@
 ---
 title: "What's Next for Computers and Humans? Brain-Computer Interface"
 tags:
-- tutorial
-- elasticsearch
-- ubuntu
+- brain-computer-interface
+- philosophy
+- cyberpunk
+- utopia
 date: 2022-07-03T00:00:00Z
 header_image_alt: "Girl in Cyberpunk 2077 / Source: cyberpunk.net"
 ---

@@ -1,10 +1,9 @@
 ---
 title: "Ways to Increase Your Online Security"
 tags:
-- tutorial
-- elasticsearch
-- ubuntu
-date: 2022-05-29T00:00:00Z
+- security
+- brain-dump
+date: 2022-06-16T00:00:00Z
 header_image_alt: "A padlock representing security / Source: unsplash.com"
 ---
 
