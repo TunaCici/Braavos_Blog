@@ -25,41 +25,43 @@ _PS: A lot of big companies and start-up businesses started to implement Kibana 
 Step 1— Download the Kibana
 ===========================
 
-You can install Kibana using the ‘apt’ command but in this tutorial I will show you the ‘archive’ method. You need to specify which version and architecture you want to use. There are two architectures: **x86\_64** and **aarch64**.
+You can install Kibana using the ‘apt’ command but in this tutorial I will show you the ‘archive’ method. You need to specify which version and architecture you want to use. There are two architectures: **x86_64** and **aarch64**.
 
 _You can get the version and other information you need from the official ElasticSearch:_
 
-```
-_https://www.elastic.co/downloads/past-releases/_
+```text
+https://www.elastic.co/downloads/past-releases/
 ```
 
-If your CPU is Intel or AMD: **use x86\_64**
+If your CPU is Intel or AMD: **use x86_64**
 
 If your CPU is Apple M1/M2: **use aarch64**
 
 You can specify the version and architecture like this:
 
-```
+```text
 kibana-8.4.2-linux-aarch64.tar.gz
 ```
 
 Download the official Kibana archive:
 
-```
+```bash
 wget https://artifacts.elastic.co/downloads/kibana/kibana-8.4.2-linux-aarch64.tar.gz
 ```
 
 Download the SHA512 checksum for error checking:
 
-```
+```bash
 wget https://artifacts.elastic.co/downloads/kibana/kibana-8.4.2-linux-aarch64.tar.gz.sha512
 ```
 
 Check if the download archive is valid and complete:
 
-```
-shasum -a 512 -c kibana-8.4.2-linux-aarch64.tar.gz.sha512_Output:  
-_kibana-8.4.2-linux-aarch64.tar.gz.sha512_: OK_
+```bash
+shasum -a 512 -c kibana-8.4.2-linux-aarch64.tar.gz.sha512
+
+Output:  
+kibana-8.4.2-linux-aarch64.tar.gz.sha512: OK
 ```
 
 Step 3 — Install and Run the Kibana
@@ -69,42 +71,43 @@ We are now ready to install Kibana.
 
 Extract the downloaded archive (this will be your Kibana Home):
 
-```
+```bash
 tar -xzf kibana-8.4.2-linux-aarch64.tar.gz
 ```
 
 Change directory into the extracted folder:
 
-```
+```bash
 cd kibana-8.4.2/
 ```
 
 To start the Kibana:
 
-```
+```bash
 ./bin/kibana
 ```
 
 In the first start-up process Kibana will ask you to configure some settings. You need to see something like this in the terminal:
 
-```
-**i Kibana has not been configured.**Go to http://localhost:5601/?code=438065 to get started.
+```text
+Kibana has not been configured.
+Go to http://localhost:5601/?code=438065 to get started.
 ```
 
 Go to the address using your browser. It will ask you to enter a token. You should have this token from your ElasticSearch server. _(See my ElasticSearch installation guide)._ Enter your token and click ‘**Configure Elastic**’
 
 _If you do not have the token you can generate a new one. Go to your ElasticServer home and open up the terminal. Execute the following command to generate a new token._
 
-```
-_./bin/elasticsearch-create-enrollment-token -s kibana_
+```bash
+./bin/elasticsearch-create-enrollment-token -s kibana
 ```
 
 You can test if the server is up and running by going to this address using any type of web browser. When asked to login, use your ‘elastic’ account. You should have your ‘elastic’ account from your ElasticSearch server. _(See my ElasticSearch installation guide)_
 
-```
+```text
 https://localhost:5601
 ```
 
 If you can successfully login then congratulations my friend you now have Kibana installed!
 
-Thank you for following my guide. If you have any further questions feel free to ask❤.
+Thank you for following my guide. If you have any further questions feel free to ask ❤
