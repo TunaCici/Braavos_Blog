@@ -15,24 +15,30 @@ Here in this article I will try to clear the confessions about all the terms abo
 TLDR;
 =====
 
-```
-**ARM (architecture)**: An efficient CPU architecture. Uses RISC instruction set.  
-**ARM64 (architecture):** Extension of ARM. Support 64-bit memory addressing**.  
-x86 (architecture)**: Intel’s own CPU architecture. Also used by AMD. Uses CISC instruction set.  
-**x86\_64 / x64 (architecture)**: Extension of x86. Supports 64-bit memory addressing.**RISC (instruction set)**: Reduced Instruction Set. Used by ARM and ARM64.  
-**CISC (instruction set)**: Complex Instruction Set. Used by x86 and x86\_64.**Intel** (company): Uses x86 and x86\_64 for their CPUs.  
-**AMD** (company): Uses x86 and x86\_64 for their CPUs.  
-**Apple** (company): Uses ARM64 for their CPUs and chips.**Notes:  
-**1\. ARM is both a company and a CPU architecture.  
-2\. ARM is more efficient since it uses RISC rather than CISC.  
-3\. CISC instructions are decoded into smaller simple ones. This uses CPU power, thus less efficiency and more heat.  
-5\. A program written for ARM will not work for x86 and vice-versa.  
-6\. It's compilers job to create an executable for either ARM or x86.  
-7\. The word "architecture" and "instruction set" is used interchangeably.
+```text
+ARM (architecture)* An efficient CPU architecture. Uses RISC instruction set.  
+ARM64 (architecture): Extension of ARM. Support 64-bit memory addressing.  
+x86 (architecture): Intel’s own CPU architecture. Also used by AMD. Uses CISC instruction set.  
+x86_64 / x64 (architecture): Extension of x86. Supports 64-bit memory addressing.
+RISC (instruction set): Reduced Instruction Set. Used by ARM and ARM64.  
+CISC (instruction set): Complex Instruction Set. Used by x86 and x86_64.
+Intel (company): Uses x86 and x86_64 for their CPUs.  
+AMD (company): Uses x86 and x86_64 for their CPUs.  
+Apple (company): Uses ARM64 for their CPUs and chips.
+
+Notes:  
+1. ARM is both a company and a CPU architecture.  
+2. ARM is more efficient since it uses RISC rather than CISC.  
+3. CISC instructions are decoded into smaller simple ones. This uses CPU power, thus less efficiency and more heat.  
+4. A program written for ARM will not work for x86 and vice-versa.  
+5. It's compilers job to create an executable for either ARM or x86.  
+6. The word "architecture" and "instruction set" is used interchangeably.
 ```
 
 Introduction
 ============
+
+![](apple-intel.jpeg)
 
 Apple and Intel — Source: innovation-village.com
 
@@ -40,16 +46,18 @@ Let’s start with the biggest and most important one. As we all know CPUs are t
 
 By design, every CPU has something called an instruction set. It is also called the CPU architecture. This instruction set is like a user-manual that tells the user (developer) how to “use” the CPU to do anything. It’s like an API reference but for CPUs.
 
-x86 and x86\_64
+x86 and x86_64
 ===============
+
+![](illustration-x86.jpeg)
 
 Illustration of Intel’s x86 Architecture - Source: blopeur.com
 
 Intel, _one of the biggest CPU makers_, came up with a revolutionary CPU called Intel 8086. This bad boy laid the foundation of almost all modern CPUs. The people at Intel called the architecture on this CPU: **x86**. See the 86 there? Yeah, it comes from the Intel 8086.
 
-The x86 architecture was so good that Intel still uses it on almost all of its CPUs. But the architecture itself evolved quite a bit. The modern version of the x86 is called x86\_64. Some call it simply: **x64**. This version has more complex instructions. It also support 64-bit memory addressing.
+The x86 architecture was so good that Intel still uses it on almost all of its CPUs. But the architecture itself evolved quite a bit. The modern version of the x86 is called x86_64. Some call it simply: **x64**. This version has more complex instructions. It also support 64-bit memory addressing.
 
-**Some CPUs that uses x86 or x86\_64 (almost all modern desktop CPUs):**
+**CPUs that use x86 or x86_64 (almost all modern desktop CPUs):**
 
 ```
 Intel 5, 6, 7, 8, 9, 10, 11, 12, 13th gen  
@@ -58,6 +66,8 @@ AMD Ryzen 1000, 2000, 3000 series
 
 ARM
 ===
+
+![](arm-architectuers.png)
 
 ARM Architectures — Source: blogs.salleurl.edu
 
@@ -69,7 +79,7 @@ Acorn later became a CPU architecture company that sells people CPU designs. It 
 
 _At first, ARM stood for_ **_Acorn RISC Machines_**_. But now, it stands for_ **_Advanced RISC Machines_**_._
 
-Some CPUs that uses ARM or ARM64 architecture:
+**CPUs that use ARM or ARM64 architecture:**
 
 ```
 Apple A chips (all modern iPhones)  
@@ -84,12 +94,16 @@ Snapdragon chips
 Instruction Set
 ===============
 
+![](riscv-architecture.jpeg)
+
 RISC-V Instrucion Set — Source: riscv.org
 
 In the older days every CPU had it’s own instruction set. It was a mess! But soon they realized this gets out of control very quickly and was not sustainable. The creation of an instruction set is time-consuming and costs BIG MONEY. So people at IBM and other big companies created architectures to solve this issue. The result were: CISC and RISC.
 
 CISC
 ----
+
+![](intel-cisc.jpeg)
 
 Intel i5 12600K Architecture Which Uses CISC — Source: techpowerup.com
 
@@ -101,6 +115,8 @@ _Most of the modern Intel and AMD CPUs use CISC or some version of it._
 
 RISC
 ----
+
+![](riscv-architecture.jpeg)
 
 RISC-V Organization Logo — Source: riscv.org
 
