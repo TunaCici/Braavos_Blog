@@ -37,7 +37,7 @@ menu:
       url: /
       weight: 1
     - name: Memes
-      url: /today-i-learned/
+      url: /memes/
       weight: 2
     - name: About
       url: /about/

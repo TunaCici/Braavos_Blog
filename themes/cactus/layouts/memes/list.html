@@ -1,0 +1,35 @@
+{{ define "main"}}
+<span class="h1">uuUuUUuu Low-Effort Underground Memes uUUUuUuu</span>
+
+<p>oops.. my cElLpHoNe just got 360-420-quick-noscope-h4x3d i ded x.x</p>
+
+<div id="archive">
+  <ul class="post-list">
+  {{ range (sort .Paginator.Pages "Date" "desc") }}
+    {{ $pageYear := (.Date.Format "2006") }}
+    {{ if (ne $pageYear ($.Scratch.Get "year")) }}
+    {{ $.Scratch.Set "year" $pageYear }}
+    <h2>{{ $pageYear }}</h2>
+    {{ end }}
+    <li class="post-item">
+      <div class="meta">
+      	<time datetime="{{ time .Date }}" itemprop="datePublished">{{ .Date.Format "Jan 02" }}</time>
+
+        {{ if gt .Params.tags 0 }}
+        <div class="article-tag">
+            <i class="fas fa-tag"></i>
+            {{ range $index, $value := .Params.tags }}
+            {{ if gt $index 0 }} {{ print ", " }} {{ end }}
+            <a class="tag-link" href="{{ "/tags/" | relLangURL }}{{ $value | urlize }}/" rel="tag">{{ $value }}</a>
+            {{ end }}
+        </div>
+        {{ end }}
+      </div>
+
+      <span><a href="{{ .Permalink | relURL }}">{{ if .Title }} {{- .Title -}} {{ else }} {{- print "Untitled" -}}{{ end }}</a></span>
+    </li>
+    {{ end }}
+  </ul>
+  {{ partial "pagination.html" . }}
+</div>
+{{ end }}
