@@ -14,16 +14,20 @@ After a year later, I decided to get the 16" Macbook Pro with M1 Pro. I was abou
 
 > Think of it like moving from one country to another. You need to move your entire house and maybe your car across the sea! Maybe you are thinking that I am exaggerating but trust me it feels exactly like that.
 
-NVDIA and Intel / Source: cgchannel.com
+![](nvidia-intel.png)
+
+NVIDIA and Intel / Source: cgchannel.com
 
 I used to have a 27" monitor connected to my Acer laptop. It had the Intel’s 7th gen CPU and NVDIA’s GTX 1060 GPU. They served me well and did their job pretty good. But now it was time to ditch all that and move to the new relatively small, yet **powerful**, Macbook Pro.
 
 As of now it’s been exactly one week since I switched to Macbook and boy oh boy! I have so many things to write about this beast of a machine. Let’s start by talking about it’s design. Then I will talk about it’s hardware and software.
 
-**Design**
+Design
 ==========
 
-Macbook Pro 2021 / Source: unsplash.com/@tony\_cm\_\_
+![](macbook-pro-2021.jpeg)
+
+Macbook Pro 2021 / Source: unsplash.com/@tony_cm__
 
 I am relatively new to the Apple’s products. So, I do not have the most experience when it comes to Apple’s ecosystem and all that. But I can say, with great confidence, that their designs are just exceptional!
 
@@ -36,6 +40,8 @@ The sound quality is what surprised me the most. I am not an audiophile but I al
 Hardware
 ========
 
+![](macbook-internals.png)
+
 Macbook’s Internals / Source: macrumors.com
 
 There is only one thing I want to talk about here and it’s the M1 Pro. I still cannot comprehend how Apple created something **so powerful and yet very efficient**. How much powerful you ask? Well, to put it simply, I was able to compile a relatively large C++ codebase in 7 minutes! The same operation usually takes 50–60 minutes on my Windows machine. And I did not tell you the best part yet; **It did not break a sweat!** During the compilation, my old machine spins up the fans so much so that it starts to sound like a jet engine taking off. Meanwhile the Macbook Pro only got a little bit hot on the screen sides. I do not know if Apple does this intentionally but, even under full-load the fans **rarely** kick off. And even when they do, you cannot hear them at all.
@@ -45,17 +51,23 @@ There is one more thing that I also want to talk about. The battery life on this
 Software
 ========
 
+![](macos-monterey.png)
+
 macOS Monterey
 
 Now we come to the part that matters the most: macOS. Compared to Windows, it has a much better UI and UX in my opinion. The operating system feels **complete** and it is **consistent** throughout the whole system. Everything from the animations to design of the applications are very well made and **polished**. For a new user like me this consistency and eye-candy elements are very impressive. Do not get me wrong, Windows is still a good OS but it is filled with bloatware that drags the system down. Apple did an amazing job with macOS and I am **very happy with it**. Switching to it was very easy and it only took me about 2–3 days to get used to it.
 
 Apple uses the **ARM64** architecture on their M1 chips. People were telling me that this will be a bad thing because most apps would either be not supported or work very poorly. But they were wrong! The transition from x86–64 architecture to ARM64 is still going but most apps have completed their transition. Like Parallels, IntelliJ, NodeJS and Adobe apps. Even if an app is not ARM64 compatible, macOS uses Rosetta 2 to emulate it. With the power of M1 Pro even the emulated apps run good.
 
+![](parallels-running-ubuntu.png)
+
 Parallels 17 Running Ubuntu 20.04
 
 For a project I am working on, I need to use a toolchain called ROS (Robots Operating System). Currently it only works on Ubuntu. On my previous machine, I needed to install Ubuntu alongside my Windows and dual-boot. This was not that hard but after some time, switching from one OS to another was tedious and time-consuming. I could not use a Virtual Machine simply because it was too slow (I tried VMWare and VirtualBox, both were unusable). But thing were different on the macOS realm. Using **Parallels 17**, I was able to install Ubuntu 20.04 ARM64 very easily. M1 Pro and macOS is so good that I can run Ubuntu on a virtual machine and still do other stuff. Yes you can do that on Windows too but here everything is so **easy, fast** and  just **convenient**.
 
 JetBrains’s already transitioned the IntelliJ to Apple chips. The performance difference was very visible. On my Windows machine running the IntelliJ project at the same time was very slow and laggy. Here in macOS, well… let’s just say it is **very** **fast**.
+
+![](rosetta-2.png)
 
 Rosetta 2 / Source: apple.com
 

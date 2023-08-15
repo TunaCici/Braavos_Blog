@@ -16,8 +16,8 @@ Here in this tutorial I will explain how you can download, install and configure
 
 _Note: A lot of big companies and start-up businesses started to implement ElasticSearch in their services one way or another. Learning it will be very helpful for both your career and your personal experience._
 
-**Step 1 — Download Java using the ‘apt’ command.**
-===================================================
+Step 1 — Download Java using the ‘apt’ command.
+----
 
 ElasticSearch is developed in Java. For this reason you need either the OpenJDK or the Oracle’s official JDK. I will be using the OpenJDK.
 
@@ -54,8 +54,8 @@ javac 11.0.16
 
 If everything went well congratulations! Your Java is now ready.
 
-**Step 2 — Download the ElasticSearch**
-=======================================
+Step 2 — Download the ElasticSearch
+----
 
 Unlike Java, you cannot install ElasticSearch on Ubuntu with the ‘apt’ command. For this reason we will use the official archive to download and install ElasticSearch. You need to specify which version and architecture you want to use. There are two architectures x86\_64 and aarch64.
 
@@ -96,8 +96,8 @@ Output:
 elasticsearch-8.4.2-linux-aarch64.tar.gz.sha512: OK
 ```
 
-**Step 3 — Install and Run the ElasticSearch**
-==============================================
+Step 3 — Install and Run the ElasticSearch
+----
 
 We are now ready to install ElasticSearch. Since it uses Java we will not need to use cmake or any other tools like that.
 
