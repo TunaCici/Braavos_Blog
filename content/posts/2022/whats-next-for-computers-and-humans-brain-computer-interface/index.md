@@ -16,6 +16,8 @@ Lately I’ve been thinking about personal computers and how it affected all of 
 
 When Apple, Google, Sony and etc. introduces something new what is the common thing we all can expect? Better, Faster, Stronger products of course! Every iteration of a product (and computers too) is better and faster than the previous one. Yes, some iterations are WAY better than we except (E.g. Apple M1 Silicon) but they are basically the same. They introduce us a phone or computer. It has more pixels, cores, transistors, memory and etc. But the way we interact with them stays the same.
 
+![](apple.jpeg)
+
 Apple / Source: unplash.com / Autoher: Hussam Abd
 
 The Way We Live
@@ -27,6 +29,8 @@ And when you think about it, all we do is look at some screens and press some bu
 
 Yes, buttons and touchscreens are cool and all but what if we can use something else. Something else to sent that 10,000 kilometer worth of message. What if we could use just our thoughts and intentions? No, I am not talking about magic or psychokinesis.
 
+![](lots-of-computers.jpeg)
+
 Lots of computers / Source: unplash.com / Author: Marvin Meyer
 
 Interaction
@@ -35,6 +39,8 @@ Interaction
 The whole universe is about interaction. When atoms ‘combine’, they interact. When water is poured over fire, they interact. When we touch something, we interact. Everything we do, we do with interaction.
 
 Our ancestors used sticks and stones. But now things have changed. We use flat screens and shiny-looking buttons. Switches, sliders, wheels and etc. These are the current things we use. Yes, we still hold/touch things with our hands but, you know what I’m talking about.
+
+![](people-collaborating.jpeg)
 
 People collaborating / Source: unplash.com / Author: John Schnobrich
 
@@ -54,6 +60,8 @@ Sorry for the serious and somewhat cringe answer but that’s the truth. We have
 Let’s say I want to sent a message to my ex at 3:00 AM. I don’t want to grab my phone and unlock it and press some keyboard buttons. I want to sent the message as soon as my drunk brain gives the command.
 
 How is that possible you ask? Well let me introduce you to the Brain Computer Interface.
+
+![](matrix.png)
 
 Matrix / Source: wired.com
 
@@ -76,6 +84,8 @@ Now comes the fun part. Think about something simple you do everyday with your c
 *   Want to skip to the next song on Spotify and increase volume? Done and done!
 
 These everyday activities can be way simpler and faster using nothing but your brain. But what about the other stuff? Like, turning on your car headlights. Locking/Unlocking your house door. Driving a plane. Painting using a robot arm. Firing a weapon system. Hacking into a network. All these things are can be controlled by a computer. And therefore your brain. When I say your brain, I mean just the brain. No physical contact or anything.
+
+![](girl-replacing-her-jaw-cyberpunk.jpeg)
 
 Girl replacing her jaw / Source: cyberpunk.net
 
