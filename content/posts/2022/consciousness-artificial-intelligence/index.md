@@ -17,6 +17,8 @@ The general idea he come up with is that divine power does not come from outside
 The Bicameral Mind
 ==================
 
+![](duality.jpeg)
+
 Duality — Source: unplash.com by Jake Pierrelee
 
 Julian Jaynes first introduced the term ‘_Bicameral Mind_’ in his writing ‘_The Origin of Consciousness_’ in 1976. He talks about the human brain having two states/parts. One is appearing to be “speaking” and the other one is just “listening and obeying”. This speaking happens in an auditory form. It is basically _talking to ourselves_. We use verbal language to talk, like speaking English or Spanish.
@@ -31,6 +33,8 @@ Early humans brain was different than ours. The biological difference mgiht not 
 
 The Consciousness
 =================
+
+![](thinking.jpeg)
 
 Thinking — Source: unplash.com by Kenny Eliason
 
@@ -54,6 +58,8 @@ To ‘grow’ consciousness
 
 The Artificial Intelligence
 ===========================
+
+![](wall-e.jpeg)
 
 Wall-E — Source: Disney
 
