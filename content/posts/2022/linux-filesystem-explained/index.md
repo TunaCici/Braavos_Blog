@@ -12,6 +12,8 @@ If you have ever used a Linux system, you probably heard the term `root filesyst
 
 In this article I will explain the `root filesystem`, it’s brief history and all the directories inside it. There will be examples that gives some practical use cases.
 
+![](reference-distro.png)
+
 The Reference Distrubiton Used in This Article
 
 Now, let me tell this before I go any further. The `root filesystem` has a weird history. So, not everything I wrote here is 100% true. Although very similar, every Linux distribution has it’s own interpretation of the  `root filesystem`. The explanations I give here are just a **‘best-practice’**. Your own Linux distro might follow a different approach.
@@ -21,27 +23,27 @@ This article follows the [Filesystem Hierarchy Standart 3.0](https://en.wikipedi
 TLDR;
 =====
 
-```
-**/**       Root folder. You should not touch this.  
-**/bin**    Binary files. Such as: ls, cp and mv.  
-**/boot**   Boot files. EFI, kernels and grub.  
-**/dev**    Device files. Such as: sda, tty and usb.  
-**/etc**    Config files. Such as: netconfig and locale.conf  
-**/home**   User home files. Such as Desktop and Documents.  
-**/lib**    Library files. Such as libc, libssl, libevent.  
-**/lib64**  Library files but, for the x64 architecture.  
-**/mnt**    Mounted disks and drives.  
-**/media**  Same as /mnt but for removable drives.  
-**/opt**    For additional software packages. Not used much.  
-**/proc**   System information. Such as: running processes.  
-**/root**   Home folder for the root user.  
-**/run**    System information. Focused on runtime softwares.  
-**/sbin**   System binary files. Such as: init and route.  
-**/srv**    Static files to server over http/s or ftp.  
-**/sys**    System information. Focused on kernel and its modules.  
-**/tmp**    Temporary files. Not permenant, files gets deleted.  
-**/usr**    System-wide user files. Clone of root folder.  
-**/var**    Variable files. Such as logs. Stays permenant.
+```text
+/       Root folder. You should not touch this.  
+/bin    Binary files. Such as: ls, cp and mv.  
+/boot   Boot files. EFI, kernels and grub.  
+/dev    Device files. Such as: sda, tty and usb.  
+/etc    Config files. Such as: netconfig and locale.conf  
+/home   User home files. Such as Desktop and Documents.  
+/lib    Library files. Such as libc, libssl, libevent.  
+/lib64  Library files but, for the x64 architecture.  
+/mnt    Mounted disks and drives.  
+/media  Same as /mnt but for removable drives.  
+/opt    For additional software packages. Not used much.  
+/proc   System information. Such as: running processes.  
+/root   Home folder for the root user.  
+/run    System information. Focused on runtime softwares.  
+/sbin   System binary files. Such as: init and route.  
+/srv    Static files to server over http/s or ftp.  
+/sys    System information. Focused on kernel and its modules.  
+/tmp    Temporary files. Not permenant, files gets deleted.  
+/usr    System-wide user files. Clone of root folder.  
+/var    Variable files. Such as logs. Stays permenant.
 ```
 
 An Introduction
@@ -49,17 +51,25 @@ An Introduction
 
 The term `filesystem` means ‘a way to organize files’. We can think of it like a librarian. It tells where the books should be placed and under which category. This way everything is organized and finding a book do not take hours.
 
+![](organized-color-palette.jpeg)
+
 Organized Color Palettes — Source: unplash.com by Andrew Pons
 
 Everything in Linux is a file. You might heard this before but it’s actually very important. Yes, the Linux ‘thinks’ everything is a file. Your mouse, screen, printer, CPU, RAM, commands, documents, pictures are all files. Now, note that not every file is the same. Some files, like devices, are a special kind of file. You cannot just edit your RAM like it’s a text file. But you can view it with the ls commands from your bash terminal. It will be displayed like it’s a text file, but it’s technically a _representation_ of the device. Like a metaphor you know, it’s there but not actually.
 
-macOS Home Directory Folders — This folder is under /home/\[your\_user\_name\]
+![](macos-folders.png)
+
+macOS Home Directory Folders — This folder is under /home/[your_user_name]
 
 Since everything is a file. The Linux needs to organize them so everything is nice and tidy. This is done under the `root filesystem`. It is called the **root** filesystem because, it is at the root of every file (like an all-father). This root filesystem is, again, a file but it’s a very special one. It has an `.ext` format. When you power-on your computer this file will be ‘mounted’ by the Linux kernel.
+
+![](linus-torvalds.jpeg)
 
 Linus Torvalds, Creator of the Linux System — Source: youtube.com/@TED
 
 Now, when Linus Torvalds and the very-smart people in the ‘team’ were building the Linux kernel they followed a filesystem. Again, to make everything in the system is nice and tidy. This filesystem is actually from the Minix OS. With time, this filesystem grew and there were some confussions. Like, which folder they need to put the system executables. At this exact time a solution came up from the Linux Foundation. [Filesystem Hierarchy Standart 3.0](https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard). Short for FHS 3.0, is a standart that defines how a filesystem should be. You can read more about it from their official website.
+
+![](linux-foundation.jpeg)
 
 Linux Foundation Logo — Source: linuxfoundation.org
 
@@ -79,9 +89,13 @@ Short for **binaries**. This is where you can find most of the system binaries. 
 
 The binaries installed by `apt`, `yum`, `snap` and other similar tools, uses this folder.
 
+![](under-bin.png)
+
 Some Binaries under /bin
 
 `/bin` folder has a weird history. In older Linux systems this was an actual folder. Old computers had small disk spaces. We are talking megabytes here. With time, this became a problem. The people working on Linux, were developing many new binaries and they were running out of space. So, they introduced another folder called `/usr/bin`. This folder is a disk that is mounted to the system. Alright, now there are two bin folders. And they are on different disks! Oh no, this is getting confusing. What do we do? Which one should we use?
+
+![](confused-guy.jpeg)
 
 Confused Guy — I can’t blame him
 
@@ -91,6 +105,8 @@ What did people do? They used both. With time, the disk space problem faded away
 =====
 
 Like it’s name sake, this folder holds **boot** related stuff. When your turn your computer on, it goes through a booting process. This process requires some files to be loaded into RAM (EFI, initrd & kernel). As you might have guessed, these are very important files, so they are stored in a special folder called `/boot`.
+
+![](under-boot.png)
 
 Some Files Under /boot
 
@@ -103,9 +119,13 @@ Unless you really know what you are doing, I recommend you to just ignore this f
 
 Short for **devices.** Your computer’s device files are stored here. But they are not an ordinary file. These files are like interfaces to your actual device. Like I said before, everything in Linux is a file. And yes, this includes your devices.
 
+![](gpu-dev.jpeg)
+
 A GPU Slottted Into a PCIE Express Interface — Source: unplash.com by Daniel Hatcher
 
 Every device is basically just an input/output software. It takes some input and gives out some output. Linux uses this concept in the form of device files. Let’s take a simple mouse for example.
+
+![](under-dev.png)
 
 Some Files Under /dev
 
@@ -115,6 +135,8 @@ Your mouse tracks your movements and clicks. When you move it to the right it se
 ====
 
 The name of this folder is controversial. Some call it ‘**editable-text-configurations’**. And some call it **etcetera**. There is no official name for this folder. It’s just called etc. If you ask me, the former makes the most sense.
+
+![](under-etc.png)
 
 Some Files Under /etc
 
@@ -127,6 +149,8 @@ This is the **home** folder. Like its name suggest, this is your home. All the u
 
 Every user has its own folder under `/home`. Say, there are two users called Kevin and Michelle. Then they will have their own home folder called `/home/kevin` and `/home/michelle`. Inside these folders they are free to do anything. When a user is added, his/her home folder is created automatically.
 
+![](under-home.png)
+
 Default Home Directory in Ubuntu 22.04
 
 Some Linux distributions modify the `/home` directory. They add some subfolders like `Desktop/`, `Downloads/`, `Music/` and etc.
@@ -135,6 +159,8 @@ Some Linux distributions modify the `/home` directory. They add some subfolders 
 ====
 
 Short for libraries. The folder holds all the necessary libraries for the system and 3rd party applications. If you are a developer and have some library files on your hand. You should put them under here.
+
+![](pip-libraries.png)
 
 Some Libraries That Gets Installed With Numpy
 
@@ -152,6 +178,8 @@ This folder is exactly the same as `/lib`. The only difference is that this `/li
 
 Short for **mount**. Your manually mounted drives should be done under this folder. In Linux you can use the mount command to mount any drive to a folder you like. Yes, you can use anywhere you want but `/mnt` is the recommended folder to mount
 
+![](hdd-drive.jpeg)
+
 HDD Drive — Source: unsplash.com by Art Wall- Kittenprint
 
 /media
@@ -161,12 +189,16 @@ This folder is exactly like `/mnt`. The difference between them is more of a per
 
 Generally speaking `/mnt` is not used as much. Nowadays most drives are automatically mounted. For example, Ubuntu mounts USB drives to `/media` folder.
 
+![](removable-drives.jpeg)
+
 Removable Drives — Source: unsplash.com by Samsung Memory
 
 /opt
 ====
 
 Short for **optional**. This one is tricky. The FHS 3.0 standard says that `/opt` folder is for any additonal software packages. So, if you have an additional software package, then umm.. put it under `/opt`? Well yes but, actually no.
+
+![](at-t.jpeg)
 
 AT&T Was One of The Companies That Used The /opt Folder For Their Software — Source: ft.com
 
@@ -177,6 +209,8 @@ Any applications and other packages you install to the system should be put unde
 
 This folder is probably the most special one. Short for **process** or **process information pseudo-file system.** This folder contains files that gives information about the running system. CPU model, clock rate, memory size and all the related information is here. You can get tons of information about the hardware & the system from this folder alone.
 
+![](proc-cpuinfo.png)
+
 Some CPU Information Stored in The /proc/cpuinfo File
 
 I called `/proc` a special folder because it is untouchable. You can not modify anything under here. Because they are not controllable. Every time the system reboots, the files here re-generates. It is a virtual folder!
@@ -186,6 +220,8 @@ I called `/proc` a special folder because it is untouchable. You can not modify 
 
 I have said that `/home` is the place where all users and their files resides. Now what about root? Root is a special user. It has total control over everything in the system. It would not be right to treat it as a normal user, am I right?
 
+![](root-meme.jpeg)
+
 Root is The Ultimate User
 
 Since root is all mighty and powerful, it deserves its own home folder. The `/root` folder is the home folder of the root user.
@@ -194,6 +230,8 @@ Since root is all mighty and powerful, it deserves its own home folder. The `/ro
 ====
 
 Short for **run-time variable data**. Although the name is a bit long, its purpose is actually very simple. `/run` folder holds all the variables and informations about system. Wait a minute. Didn’t we say `/proc` holds all the information about the system? Why do we have the `/run` folder then?
+
+![](under-run.png)
 
 Some Files Under /run
 
@@ -206,6 +244,8 @@ The `/proc` folder holds hardware/device related information. The `/run` folder,
 
 Short for **system binaries**. Like the `/bin`, this folder holds binaries. But what’s the difference you ask? Well the answer is not clear and depends on who you ask.
 
+![](under-sbin.png)
+
 Some Files Under /sbin
 
 Generally speaking `/sbin` holds system-related binaries and `/bin` holds everything else. Now, in the old days this separation was useful. Since `/sbin` is system-related, they put more important and critical binaries there. Nowadays, the line between `/sbin` and `/bin` is blurry. They both contain important binaries for the system.
@@ -216,6 +256,8 @@ The overall idea is, `/sbin` should be used for system binaries. Binaries that r
 ====
 
 Short for serve. This is a very specific folder. The FHS 3.0, tells that the `/srv` should contain site-specific data files. These files are, static web files, scripts and anything a web server, serves.
+
+![](web-files.png)
 
 (Generally) Static Web Files
 
@@ -228,6 +270,8 @@ Short for **system**. We have seen that `/dev` folder is for device files. It’
 
 Now you might be getting confused. Okay we have `/proc` for system information and `/sys` for kernel information. Umm.. isn’t kernel THE system? What’s the difference?
 
+![](confusion.jpeg)
+
 More Linux Filesystem Confusion
 
 The problem is again controversial. When the Linux introduced the `/proc` folder, they kept all system information and process information there. Over time, this folder become over-populated. They wanted to some separation: `/proc` should be used for process information and `/sys` for system information. But, as you might have guessed, this caused some debate over what is a process info and what is a system info.
@@ -238,6 +282,8 @@ The move from `/proc` to `/sys` is slow. There are some files which should be on
 ====
 
 Short for **temporary**. When your want to store some temporary files, for example storing caches and etc., you should use this folder. Note that the files here are for temporary files ONLY. The system might delete the files here after some time. After an hour or a reboot, the `/tmp` folder gets cleaned.
+
+![](7zip.jpeg)
 
 7zip FileManager Can Use The /tmp folder to Temporarily Load .zip Files — Source: bleepstatic.com
 
@@ -252,11 +298,15 @@ There are two names for this folder: **user** and **user-system-resources**. You
 
 The `/usr` folder is very similar to the root folder. It has its own hierachy and subfolders. Majority of the binaries, resources, utilities, header files and etc., are under `/usr`. The files under here are read-only and can be used by all the users in the system.
 
+![](under-usr.png)
+
 Some Files Under /usr
 
 Like the root folder, the `/usr` has its own hierarchy. Some `/usr` subfolders are: `/bin`, `/lib`, `/sbin`, `/local`, `/include`, `/share`. The purpose of the /usr folder is to separate system files from user files. And just like any other Linux folder this separation is confusing.
 
 The general idea is that `/usr` is another folder just like the `/` folder. It focuses more on user resources. Binaries you can install, C/C++ headers, libraries you install and everything YOU can add to the system is under `/usr`. Yes you can add files to `/` folders but, you should use `/usr` whenever you can.
+
+![](usr-confusion.jpeg)
 
 More Confusion :(
 
@@ -268,6 +318,8 @@ There is one more thing I want to add. It’s the `/usr/local` folder. This fold
 ====
 
 Short for variables. Mainly used for storing logs and other similiar files. The files here are preserver even after reboots. So, if you have a temporary file that you want to keep, then you should put it here.
+
+![](under-var.png)
 
 Some Files Under /var
 
