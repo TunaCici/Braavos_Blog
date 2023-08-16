@@ -10,6 +10,8 @@ header_image_alt: "Pinging my Raspberry Pi (right) from my Mac (Left) — LAN Co
 
 As we all know, Linux is a very powerful operating system. Even if it’s not as popular as Windows or macOS, it’s importance and power is no joke. Heck, it might even be the most important OS ever (depending on the person you ask) and there is a good justification for that.
 
+![](daily-time-spent-online.png)
+
 Daily Time Spent Online — Source: oberlo.com
 
 Look at the visualized data above. You can clearly see that we spent a lot of time on the internet. This means that, we are interacting with tons of server all around the world. And guess what OS does those servers are running? Linux! And they are all using it’s networking tools.
@@ -34,23 +36,27 @@ TLDR;
 =====
 
 ```
-**Networking**: Communication that happens between two or more individuals.  
-**Networking (computers):** Computers talking to each other.  
+Networking: Communication that happens between two or more individuals.  
+Networking (computers): Computers talking to each other.  
   
-**Network:** A collection of computers that are connected to each other  
-**Local Networks:** A type of network (small size & distance) (ex. home)**Private Networks:** A type of network (medium/large size & distance) (ex. company)**Public Networks:** A type of network (large size & open to everyone) (ex. internet)  
+Network: A collection of computers that are connected to each other  
+Local Networks: A type of network (small size & distance) (ex. home)
+Private Networks: A type of network (medium/large size & distance) (ex. company)
+Public Networks: A type of network (large size & open to everyone) (ex. internet)  
   
-**Network Interface:** Hardware device that connects computers to network  
+Network Interface: Hardware device that connects computers to network  
   
-**lshw:** Command for displaying hardware devices in Linux (ex. network)  
-**ifconfig:** Command for configuring network interfaces in Linux (legacy)  
-**ip:** Command for configuring network interfaces and more in Linux (modern)
+lshw: Command for displaying hardware devices in Linux (ex. network)  
+ifconfig: Command for configuring network interfaces in Linux (legacy)  
+ip: Command for configuring network interfaces and more in Linux (modern)
 ```
 
 The Setup
 =========
 
 Since networking requires multiple devices connected to each other, I have setup an example network. This way I can give better visual examples and help in this journey.
+
+![](my-network-setup.png)
 
 My Basic Network Setup
 
@@ -67,6 +73,8 @@ Just like in human relationships, networking basically means talking with others
 
 When computers talk to each other, we call it ‘networking’. And when many computers come together to communicate, they form a ‘network’. We can compare a ‘network’ to a group chat. You can have family group, a school group or a bigger Discord gaming group.
 
+![](group-chat.jpeg)
+
 Group Chat is Basically a Local Network — Source: macrumors.com
 
 Now, we have different kinds of networks with different sizes and purposes. The most popular ones are: local networks, private networks and public networks. Let’s go over them briefly.
@@ -77,6 +85,8 @@ Local Network
 These types of networks are relatively small in their sizes and made up of devices that are in close distance to each other. For example, your home network that connects your laptop, phone, TV, printer, Amazon Alexa and etc. These devices can connect to each other with devices like routers and switches to form what is known as a ‘local network’.
 
 > Sometimes a ‘local network’ is also called a Local Area Network (LAN).
+
+![](typical-lan-party.jpeg)
 
 A Typical LAN Party (good times) — Source: dazeddigital.com
 
@@ -91,6 +101,8 @@ Now, we can form a local network within engineers and another local network for 
 
 What’s the solution? A Private Network.
 
+![](example-company.jpeg)
+
 Most Companies Uses a Private Network for Security — Source: medium.com by Shridgar Grupta
 
 Private networks are basically multiple local networks that are connected to each other. These types of networks are used mostly within organizations, companies and schools. They keep their networks as isolated as possible (especially from the internet) so that no average Joe would be able to access it. Thus, making this type of network a ‘private’ one.
@@ -102,11 +114,15 @@ Public Network
 
 Think of a place where everyone around the world can come together and talk to each other. Of course we can’t physically do that, but we can use the Internet! When we share a post on Reddit everyone around the world can see it, right? So, we are basically connected to everyone. We can communicate with each other over the Internet.
 
+![](earth-at-night.jpeg)
+
 We Can Compare Public Roads to Public Networks — Source: medium.com by NASA
 
 The public networks are big networks that anyone can join at any time. The biggest example to a public network is the internet. Almost everything we use (iMessage, Overwatch, Reddit, Instagram) uses a public network that is the internet. What separates this network from others is in its publicity: **anyone can join this network; it’s public**.
 
 Public networks are very special compared to local and private networks. Since they are public, there must be organizations and governments that helps maintaining it. Otherwise, the Internet can turn into chaos!
+
+![](comcast.jpeg)
 
 One of The Biggest ISP: Comcast — Source: reuters.com
 
@@ -117,11 +133,15 @@ Of course, they are not building a public network for charity. The government gi
 Network Interfaces
 ==================
 
+![](wlan-device.jpeg)
+
 A Wireless Network Device — Source: ifixit.com
 
 Okay nice, we have all these cool networks. But how can we join them? So, we can play Minecraft over the LAN with the gang.
 
 Well, first things first, we need a physical network device called ‘a network interface’. These devices allows us to connect to physical networks. Your iPhone has one, your Xbox has one and your laptop probably has more than one.
+
+![](modern-motherboard.jpeg)
 
 Most Modern Computers Have Wi-Fi and Ethernet Built-in — Source: msi.com
 
@@ -138,9 +158,11 @@ This Linux command is used to gain information about the hardware devices. You c
 
 Below Linux command displays all your network devices. It is recommended to run it as ‘sudo’.
 
-```
+```bash
 $ sudo lsfw -class network
 ```
+
+![](lshw-class-network-output.png)
 
 You can see that I have two devices (interfaces) on my Raspbbery Pi 4b. Look at the lines that start with ‘\*’. Each of these lines corresponds to a network device.
 
@@ -151,13 +173,19 @@ This commands displays all your network interfaces connected to your Linux. Comp
 
 Here is an example usage of the ifconfig command.
 
-```
+```bash
 $ ifconfig
-```‘ifconfig’ Command Output
+```
+
+![](ifconfig-command-output.png)
+
+‘ifconfig’ Command Output
 
 Here you can see that my Raspberry Pi 4b has only two network interfaces. The one called ‘wlan0’ is my Wi-Fi adaptor and the ‘lo’ is my machine’s localhost. It’s not a real/physical device, but a virtual one. It is used for applications inside the OS (we will talk about it in part 3).
 
 > The ‘lshw’ command did not show ‘lo’ because it is not a real hardware device. The ‘ifconfig’ command did not show ‘Ethernet Device’ because it’s not setup yet.
+
+![](localhost-meme.jpeg)
 
 ‘localhost’ is Not a Real Network (Device) But it Acts Like One! — Source: thecodinglove.com
 
@@ -176,9 +204,13 @@ Almost all Linux computers have the ‘ip’ command installed by default . So, 
 
 Let’s use this command to check our network interfaces.
 
-```
+```bash
 $ ip addr show
-```‘ip addr show’ Command Output
+```
+
+![](ip-addr-show-command-output.png)
+
+‘ip addr show’ Command Output
 
 Here you can see an additional device: ‘eth0’. The ‘ifconfig’ command did not show this because it’s not being setup yet. However, ‘ip’ shows ALL of your devices whether they are active or not.
 
@@ -190,10 +222,14 @@ Just like any hardware device, you can turn any of your network interface on and
 
 The below command is used for bringing down/up a network interface.
 
+```bash
+$ sudo ip link set dev <INTERFACE_NAME> up # Bring it up  
+$ sudo ip link set dev <INTERFACE_NAME> down # Bring it down
 ```
-$ sudo ip link set dev <INTERFACE\_NAME> up # Bring it up  
-$ sudo ip link set dev <INTERFACE\_NAME> down # Bring it down
-```You Can See That I Can Bring an Interface Down
+
+![](ip-link-set-command-output.png)
+
+You Can See That I Can Bring an Interface Down
 
 Here in the above picture you can see that the ‘ip’ command can bring a network interface down (see state UP|DOWN).
 
