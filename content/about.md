@@ -2,7 +2,7 @@
 title: About
 ---
 
-![Picture of me with an R35](/images/me.jpeg)
+![Picture of me with an R35](/blog/images/me.jpeg)
 
 Picture of me with an R35 (i have obsession)
 
