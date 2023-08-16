@@ -23,26 +23,28 @@ If you haven’t read the Part-1, I highly encourage you to give it a quick look
 TLDR;
 =====
 
-```
-**IP Address:** Unique set of characters that is used to identify computers in a network  
-**IPv4 (protocol):** A version of the IP address (legacy)  
-**IPv6 (protocol):** A version of the IP address (modern)  
+```text
+IP Address: Unique set of characters that is used to identify computers in a network  
+IPv4 (protocol): A version of the IP address (legacy)  
+IPv6 (protocol): A version of the IP address (modern)  
+   
+Private IP Address: An IP address used inside a closed network (ex. home, company)  
+Public IP Address: An IP address used outside the closed network (ex. internet)  
+NAT: A solution method that connects two networks via private/public IP addresses
+
+Ping: A tool that send packets to the destination IP address (used for testing)  
   
-**NAT:** A solution method that connects two networks via private/public IP addresses  
-**Private IP Address:** An IP address used inside a closed network (ex. home, company)  
-**Public IP Address:** An IP address used outside the closed network (ex. internet)  
-  
-**Ping:** A tool that send packets to the destination IP address (used for testing)  
-  
-**Static IP Configuration:** A term for manually assigning IP address   
-**Dynamic IP Configuration:** A term for automatically assigning IP addressess  
-**DHCP:** A server that handles dynamic IP configuration inside a network
+Static IP Configuration: A term for manually assigning IP address   
+Dynamic IP Configuration: A term for automatically assigning IP addressess  
+DHCP: A server that handles dynamic IP configuration inside a network
 ```
 
 The Setup
 =========
 
 Since networking requires multiple devices connected to each other, I have setup an example network. This way I can give better visual examples and help you in this journey.
+
+![](my-network-setup.png)
 
 My Basic Network Setup
 
@@ -59,6 +61,8 @@ Now, we have all these cool networks out there; local networks, private networks
 
 IP addresses are unique set of characters that is used to identify computers in a network. We can think of them as our username, national ID or home address.
 
+![](irl-mailbox.jpeg)
+
 IP Addresses Can be Compared to Mail Address — Source: unsplash.com by Oleksandr Gamaniuk
 
 Currently there are two types of IP addresses. One is called IPv4 and other is IPv6. In the old networking times, people used a simple IP address that is the IPv4. However, this old protocol only supports around 4.3 billion (2^32) different addresses.
@@ -66,6 +70,8 @@ Currently there are two types of IP addresses. One is called IPv4 and other is I
 You can see that the IPv4 is a major problem in 2023, because there are WAY more than 4.3 billion devices out there connected to the Internet (approx. 14 billion devices). So, how can everything still work and not crash?
 
 There are two answers to that question: IPv6 and NAT.
+
+![](example-ipv4-ipv6.jpeg)
 
 Example IP Address’ (IPv4 abd IPv6) — Source: stackscale.com
 
@@ -77,6 +83,8 @@ IPv6 solves most of our problems, but how come everyone still uses IPv4? There a
 2.  Most network tools and hardwares are either not supported or optimized for IPv6 yet.
 
 > Although the IPv4 (with the help of NAT) is good enough, the migration to IPv6 is inevitable and is going to happen whether we like it or not. (Dread it. Run from it. IPv6 still arrives.)
+
+![](ipv6-meme.png)
 
 Most People Hate IPv6, But it is Inevitable! Source: forwardingplane.net
 
@@ -90,6 +98,8 @@ Network Address Translation (NAT) is basically a way for devices on a local netw
 Imagine you have a router at home and 3 devices (iPhone, laptop and smart TV) that want to access the internet. Without NAT, each device would need its own IP address, which would be expensive and impractical (remember IPv4?). And since we are not using IPv6, yet, we must use NAT to help us.
 
 Basically, NAT allows multiple devices on a network to share a single public IP address and access the internet, while keeping their private IP addresses hidden. The below picture perfectly illustrates what NAT is.
+
+![](nat-example.png)
 
 Private IP vs Public IP — Source: avg.com
 
@@ -108,6 +118,8 @@ All devices in a local/private network uses each others’ private IP address to
 
 I have two machines (Macbook and Raspberry Pi) that are connected to via my home router. So, in total there are three network devices and each of them have unique private IP addresses. Check out the below image.
 
+![](my-local-network-setup.png)
+
 My Local Network Setup
 
 You can see that each of my devices have their own private IP addresses. Even my router has one! That’s because it still is a device in a network and needs to have an IP to talk to others.
@@ -116,10 +128,12 @@ You can see that each of my devices have their own private IP addresses. Even my
 
 If you want to learn your own private IP in Linux, you can do so using the below command.
 
-```
-\# I can choose not to specify <INTERFACE>, but then all interfaces will be displayed  
+```bash
+# I can choose not to specify <INTERFACE>, but then all interfaces will be displayed  
 $ ip addr show <INTERFACE>
 ```
+
+![](ip-addr-show-command-output.png)
 
 Since I’m using the wlan0 network interface, I need to look for it’s private IP. I have two private IPs: IPv4 and IPv6.
 
@@ -138,16 +152,22 @@ This IP address is used on, you guessed it, public networks (AKA the Internet). 
 
 Public IP addresses are given to you by either your ISP or your company’s IT department. Since almost everyone uses the IPv4, there are only a handful amount of public IP addresses. This makes them valuable and opens a whole new market for earning money.
 
+![](public-ip-location.png)
+
 You Can See Which ISP Your Public IP Address Belongs to And The Machine’s Location Using It
 
 How you can learn about your public IP address is a bit tricky. There is no proper Linux way, because the public IP is not stored directly on your machine. It is stored in either your router, your modem or some other special device (AKA your NAT device).
 
 The below command is one of the popular ways that you can learn your public IP address.
 
-```
-\# 'curl' is a command that is used to transfer/retrieve data from URLs  
+```bash
+# 'curl' is a command that is used to transfer/retrieve data from URLs  
 $ curl ifconfig.co
-```Both of my Devices Has The Same Public IP Address (Because NAT)
+```
+
+![](my-public-ipv4.png)
+
+Both of my Devices Has The Same Public IP Address (Because NAT)
 
 Every device on your local network shares the same public IP address. For example; your laptop, iPhone and your TV all has the same public IP address. So, if your sister gets IP banned from League of Legends, then you will be banned too (because you both have the same public IP).
 
@@ -158,9 +178,13 @@ Now, before we go any further with IP addresses, I would like to introduce the t
 
 The below command sends packages to the destined address. If it is successful, then you know the two machines are connected!
 
+```bash
+$ ping <DESTINATION_IP>
 ```
-$ ping <DESTINATION\_IP>
-```Pinging my Raspberry Pi (Private IP) — Pinging Google (Public IP)
+
+![](ping-command-output.png)
+
+Pinging my Raspberry Pi (Private IP) — Pinging Google (Public IP)
 
 > I was able to ping Google without specifying it’s public IP address, because my machine was using a DNS.
 > 
@@ -186,9 +210,13 @@ Static IP address means that your IP address will not change over time and is ke
 
 Assigning a new private IP address in Linux is done via using the ‘ip’ command. Let’s see it.
 
-```
+```bash
 $ ip addr add <IP>/<NETMASK> dev <INTERFACE>
-```Pinging The New 192.168.1.47 (Left) — Assigning 192.168.1.47 (Right)
+```
+
+![](ip-addr-add-command-output.png)
+
+Pinging The New 192.168.1.47 (Left) — Assigning 192.168.1.47 (Right)
 
 Check out the above image. You can see that before I assigned the new IP address: 192.168.1.47, I was not able to ping it. However, after using the ‘ip addr add’ command, I succesfully pinged it. Meaning, the new IP works!
 
@@ -196,13 +224,19 @@ Check out the above image. You can see that before I assigned the new IP address
 
 You can also delete an IP address. Check out the command below.
 
-```
+```bash
 $ ip addr del <IP>/<NETMASK> dev <INTERFACE>
-```My IP is Gone, Reduced to Ashes
+```
+
+![](ip-addr-del-command-output.png)
+
+My IP is Gone, Reduced to Ashes
 
 You can probably starting to see that by assigning a new IP address and then deleting the old one, I can changed my IP address. This is the ‘modern Linux’ way to change an IP address: by adding a new on and deleting the old one.
 
 Now that we know how to assign&change our private IP address, let’s learn how to do the same in the public domain (or don’t).
+
+![](ip-addresses-meme.jpeg)
 
 IP Addresses Can be Confusing — Source: devRant.com
 
@@ -215,6 +249,8 @@ Below are a few ways you can metaphorically ‘change’ your static public IP a
 1.  Contacting your ISP. (You need to ‘buy’ one from them)
 2.  Buying a DNS service (This is rather a workaround using hostnames)
 3.  Buying/Using a VPN (Again, a workaround that uses ‘NAT technics’)
+
+![](dedicated-ip.png)
 
 NordVPN is One of The Few Services That Provides Static/Dedicated IP
 
@@ -238,15 +274,21 @@ When a device connects to a network, it sends a broadcast message requesting an 
 
 Most modern router’s have DHCP servers built inside them. You can check your’s by going into your router’s configuration page (mostly by typing 192.168.1.1 into a web browser).
 
+![](my-dhcp-settings.png)
+
 My Router’s DHCP Settings Page
 
 You can see that I can configure my DHCP server. For example, I can set the range of IP addresses to be given to devices. Or my ‘rental period’, which basically means when to release unused IP addresses and make them available for others to use.
+
+![](dhcp-meme.png)
 
 DHCP Servers Are Pretty Generous When You Think About it — Source: mememaker.com
 
 DHCP servers are really powerful. You can use a DHCP server to give you a dynamic IP address, and also set your IP address statically via the ‘ip addr’ command. But there is a better way to make your IP static via **dedicating it**.
 
 You can dedicate an IP address to you and only you when using a DHCP server. All you need to do is: associate your MAC address with the IP address you want in your router’s configuration page.
+
+![](dedicate-private-ip.png)
 
 Here I Can Get a Dedicated IP Via my MAC Address
 
