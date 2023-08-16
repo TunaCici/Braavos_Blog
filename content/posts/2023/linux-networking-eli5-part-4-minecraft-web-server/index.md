@@ -14,6 +14,8 @@ In this final part we will **not** be explaining new networking terms, but inste
 
 In front of use we have two simple practices: a game server (**Minecraft**) and a web server (**Flask**). Together, we will build, configure and run these servers using the networking fundamentals we have learned so far.
 
+![](servers-running.png)
+
 Both of The Servers Running
 
 > Note that this is NOT a full-fledged tutorial on how to deploy a Minecraft or a web server on the cloud. Everything shown here is for learning purposes only.
@@ -37,6 +39,8 @@ The Setup
 
 I’m using basically the same setup from the previous parts. However, I have changed the diagram a bit to better suit this article.
 
+![](network-diagram.png)
+
 The Overall Network Used in This Article
 
 I have two local devices: one is my Macbook and the other is my router. I am connected the Internet with the IP address 176.42.19.184.
@@ -47,18 +51,19 @@ At the other end, I have a cloud server (hosted on Oracle’s Server Farms). It 
 
 The server specs are:
 
-```
-**CPU:** Ampere® Altra™ (2 OCPU) @ 3.0 GHz (virtio)  
-**RAM:** 16GiB (virtio)  
-**OS:** Ubuntu Server 22.04 LTS (aarch64)  
+```text
+CPU: Ampere® Altra™ (2 OCPU) @ 3.0 GHz (virtio)  
+RAM: 16GiB (virtio)  
+OS: Ubuntu Server 22.04 LTS (aarch64)  
   
-\*No display avaliable. Only SSH connections.
+*No display avaliable. Only SSH connections.
 ```
 
 You can get the same server using Oracle’s Always-Free resources. More information can be found on the official website below.
 
-```
-\# You can get an Always-Free Server on the cloud  
+```text
+# Oracle's Always-Free compute instance on cloud
+
 https://www.oracle.com/cloud/free/
 ```
 
@@ -68,6 +73,8 @@ Minecraft
 When it comes to popular gaming, nothing can beat the good-old Minecraft! Everyone knows about it and probably have played it once in their lifetime. It’s a game about creativity where you can design, craft and build in an endless world full of adventures. Oh and it’s also the best selling game of all times, no biggies.
 
 > It sold around 238 million copies around the world (beating the no.2 GTA V /w 170 million copies).
+
+![](minecraft-launcher.png)
 
 The Official Minecraft Launcher
 
@@ -82,15 +89,17 @@ First things first, we should make some preparations on the server-side.
 
 After you have created your Linux machine on the cloud (ex. Oracle, Azure, Google, AWS), you will need to configure some network settings. Or more specifically, the firewall settings, so that the Minecraft server can be accessible from the Internet.
 
+![](google-cloud.png)
+
 Google Cloud (and other cloud services) Uses Firewalls to Increase Security — Source: cloud.google.com
 
 In order for the server packets to ‘pass’ the firewall, we need to add a firewall/security ‘rule’. (remember Firewalls?). The rule (for Minecraft) is to allow **any incoming/outgoing packets (UDP&TCP)** that uses the **port number 25565**.
 
 Below are the rules that you need to add to your firewall.
 
-```
-**Firewall/Security Rule 1.** Allow UDP connections from 0.0.0.0/0 (anyone) to access port 25565  
-**Firewall/Security Rule 2.** Allow TCP connections from 0.0.0.0/0 (anyone) to access port 25565
+```text
+Firewall/Security Rule 1. Allow UDP connections from 0.0.0.0/0 (anyone) to access port 25565  
+Firewall/Security Rule 2. Allow TCP connections from 0.0.0.0/0 (anyone) to access port 25565
 ```
 
 Depending on your cloud server (Oracle in our case) you need to configure two different firewalls.
@@ -105,14 +114,16 @@ Network Security Group
 
 Most cloud machines uses additional firewalls to increase their network security. You can see from the list below that each cloud service provider uses different terms and ways to configure their firewalls.
 
-```
-**Amazon Web Services:** Security Groups -> \[Inbound\] Security Rule  
-**Azure:** Network Security Group -> \[Inbound\] Security Rule  
-**Google Cloud:** Virtual Private Network -> Firewall -> \[Create\] Firewall Rule  
-**Oracle Cloud:** Virtual Cloud Network -> Security List -> \[Add\] Ingress Rule
+```text
+Amazon Web Services: Security Groups -> [Inbound] Security Rule  
+Azure: Network Security Group -> [Inbound] Security Rule  
+Google Cloud: Virtual Private Network -> Firewall -> [Create] Firewall Rule  
+Oracle Cloud: Virtual Cloud Network -> Security List -> [Add] Ingress Rule
 ```
 
 > You can find more info about the firewall/security settings on your cloud service provide’s website.
+
+![](oracle-cloud.png)
 
 Oracle Cloud’s Logo — Source: oracle.com
 
@@ -120,13 +131,19 @@ Here in this article I will be explaining only the Oracle’s firewall settings.
 
 First, open the ‘subnet’ configuration page that you are using with your Linux machine. (you can use the search panel)
 
+![](firewall-step-1.png)
+
 Quick Tip: You Can Use The Search Bar
 
 Open the default security list (or create a new one, it does not matter).
 
+![](firewall-step-2.png)
+
 Open Your Security List That is Basically a Firewall Profile/Preset
 
 Add **two** ingress rules (TCP & UDP) to allow port number **255565** (Minecraft) through the firewall. One rule is for the TCP and other is for UDP connections. You need to add the same rule for both of them.
+
+![](firewall-step-3.png)
 
 Add a Rule For Allowing TCP Requests For Port 25556
 
@@ -139,24 +156,30 @@ As we have seen from the previous article, the Linux also has a firewall that we
 
 We would be normally using the ‘ufw’ command tool to configure our firewall. However, Oracle Cloud does not like it very much. I tried to set it up, but failed miserably.
 
+![](cool-ufw-picture.jpeg)
+
 An Example ‘ufw’ Command Usage — Source: makeitcheasier.com
 
 Instead of ‘ufw’ I have decided to use ‘firewalld’, which is an alternative way to configure Linux firewalls. And also, it works great with Oracle Cloud.
 
 Run the below commands to allow port 25565 for both UDP & TCP connections.
 
-```
-\# Install and enable 'firewalld' (so that it is open at OS launch)  
+```bash
+# Install and enable 'firewalld' (so that it is open at OS launch)  
 $ sudo apt install firewalld  
 $ sudo systemctl enable firewalld  
   
-\# Allow port 25565 for both UDP & TCP  
+# Allow port 25565 for both UDP & TCP  
 $ sudo firewall-cmd --permanent --zone=public --add-port=25565/udp  
 $ sudo firewall-cmd --permanent --zone=public --add-port=25565/tcp  
   
-\# Reload the firewall rules  
+# Reload the firewall rules  
 $ sudo firewall-cmd --reload
-```I have Already Added The Firewall Rules For Port Number 25565
+```
+
+![](firewall-step-4.png)
+
+I have Already Added The Firewall Rules For Port Number 25565
 
 Hurray! We have successfully onfigured our firewall settings to allow network packets for the port number 25565 (Minecraft Server).
 
@@ -165,19 +188,25 @@ nmap
 
 Although, we have set the firewall setting to open port number 25565, we must make sure that it is working correctly. Of course we can check for it when we are actually running the server, but it is not a good practice. You should always test your settings.
 
+![](nmap-logo.png)
+
 ‘nmap’ Logo — Source: nmap.org
 
 For the testing, we will be using a tool we will be using a tool called Network Map (nmap). By using ‘nmap’ we can scan for open port(s) on a server/machine using it’s IP address.
 
 You can use the below command to install and use ‘nmap’ to scan for a specific port.
 
-```
-\# Install 'nmap'  
+```bash
+# Install 'nmap'  
 $ sudo apt install nmap  
   
-\# Scan for port 25565  
-$ sudo nmap -p80,443 <SERVER\_IP\_ADDRESS>
-```Here’s The ‘nmap’ Scan Result
+# Scan for port 25565  
+$ sudo nmap -p80,443 <SERVER_IP_ADDRESS>
+```
+
+![](nmap-scan-result.png)
+
+Here’s The ‘nmap’ Scan Result
 
 We got the results and the port is ‘closed’? Now, look at the ‘state’ column. It is showing ‘closed’, because since there are no programs ‘listening’ on port 25565 (Minecraft server is not running yet), it shows the state as ‘closed’.
 
@@ -192,60 +221,76 @@ Prerequisites (Install Java)
 
 Minecraft & the server is written in Java and for that, we need to have Java installed on our machines.
 
+![](java-logo-old-new.jpeg)
+
 Java Logo (Old vs.New) — Source: logos-world.net
 
 In Linux you have two options to install Java. You can _a) Install the OpenJDK_ or _b) Install the Official Oracle JDK_. Here, in this article, we will be using the option **_a_**. (It does not matter which option you choose to use)
 
-```
-\# Update the 'apt' sources list  
+```bash
+# Update the 'apt' sources list  
 $ sudo apt update  
   
-\# Install OpenJDK 17 or newer (I choose 19)  
+# Install OpenJDK 17 or newer (I choose 19)  
 $ sudo apt install openjdk-19-jre-headless  
   
-\# Check if it is installed correctly  
+# Check if it is installed correctly  
 $ java --version
-```Java is Installed Correctly, YAY!
+```
+
+![](java-install.png)
+
+Java is Installed Correctly, YAY!
 
 Server Setup
 ------------
 
 We are now ready to install the server ! First, let’s choose a location to install your server and ‘change directory’ into it.
 
-```
-\# I choose my 'home' directory  
-$ mkdir ~/Minecraft\_Server  
+```bash
+# I choose my 'home' directory  
+$ mkdir ~/Minecraft_Server  
   
-\# Change directory into the Minecraft\_Server  
-$ cd ~/Minecraft\_Server
+# Change directory into the Minecraft_Server  
+$ cd ~/Minecraft_Server
 ```
+
+![](download-minecraft-server.png)
 
 Download the Minecraft Server file from Mojang’s offical website. You can choose whicever version you want. I will be using 1.19.3 since it is the latest version as of writing this article.
 
-You can copy the download link by right clicking the highlighted green text ‘minecraft\_server.1.19.3’.
+You can copy the download link by right clicking the highlighted green text ‘minecraft_server.1.19.3’.
 
-```
-\# Copy the download link from the Mojang's website  
+```bash
+# Copy the download link from the Mojang's website  
 https://www.minecraft.net/en-us/download/server  
   
-\# Download the server  
+# Download the server  
 $ wget https://piston-data.mojang.com/v1/objects/c9df48efed58511cdd0213c56b9013a7b5c9ac1f/server.jar
-```The Internet Speed is Incredible!
+```
+
+![](downloading-minecraft-server-jar.png)
+
+The Internet Speed is Incredible!
 
 Now, you can directly start the server from the command line. However, I will be showing you a better way: start script.
 
 Go to this beautiful website created **by bluely & aber**. Here, you can choose your machine settings and customize the server however you want. This way your Minecraft server will be properly optimized and hopefully work lag-free.
 
-```
-\# You can use this website for a better server script  
+```bash
+# You can use this website for a better server script  
 https://startmc.sh
-```Here’s The UI That You Can Use to Create Your Customized Start Script
+```
+
+![](startmc.sh.png)
+
+Here’s The UI That You Can Use to Create Your Customized Start Script
 
 You can use the very simple UI to generate a start script. What you want to do is enter the server filename (in our case it’s _server.jar_), select the script type to be _‘Basic (Shell Script)’_, specify the RAM you want the server to have (in my case it’s _4096M_) and select from one of the flag types (_doesn’t matter_ _which one unless you have 12GB+ RAM_).
 
 Here’s the start script that we will be using.
 
-```
+```bash
 #!/bin/bash  
   
 JAVA="java"  
@@ -259,89 +304,111 @@ ${JAVA} -Xmx${RAM} -Xms${RAM} ${FLAGS} -jar ${JAR} --nogui
 
 Now that we have our script, let’s use it to launch our server. First, create a file named _‘start.sh’._
 
-```
-\# Create a new file  
+```bash
+# Create a new file  
 $ touch start.sh
 ```
 
 Copy the starting script into this file that we have generated before. Also, we need to give the ‘execution permission’ so that Linux can actually execute it.
 
-```
-\# Open the file using 'nano' (you can also use vim)  
+```bash
+# Open the file using 'nano' (you can also use vim)  
 $ nano start.sh  
   
-\# Copy the script into the file  
+# Copy the script into the file  
   
-\# Hit CTRL+S to save and CTRL+X to exit  
+# Hit CTRL+S to save and CTRL+X to exit  
   
-\# Give the 'execution' permission  
+# Give the 'execution' permission  
 $ sudo chmod +x start.sh
-```Here’s the ‘start.sh’ File
+```
+
+![](start-sh.png)
+
+Here’s the ‘start.sh’ File
 
 Everything is almost ready. Let’s execute the script and see what happens.
 
-```
-\# Start the server  
+```bash
+# Start the server  
 $ ./start.sh
-```We Need to Accept Mojang’s EULA
+```
+
+![](eula-error.png)
+
+We Need to Accept Mojang’s EULA
 
 Oh no… The server didn’t work. What happened? Well, if we take a closer look into the logs, we can see that we need to accept Mojang’s EULA in order to actually launch the server.
 
 We can accept the EULA via opening the ‘eula.txt’ and changing a variable from ‘false’ to ‘true’. This way we will be accepting Mojang’s EULA.
 
-```
-\# Open the 'eula.txt'  
+```bash
+# Open the 'eula.txt'  
 $ nano eula.txt  
   
-\# Change the line 'eula=false' to 'eula=true'  
+# Change the line 'eula=false' to 'eula=true'  
   
-\# Hit CTRL+S to save and CTRL+X to exit
+# Hit CTRL+S to save and CTRL+X to exit
 ```
 
 Okay, let’s run the start script again.
 
-```
-\# Start the server (for real this time)  
+```bash
+# Start the server (for real this time)  
 $ ./start.sh
-```Server is Now Running
+```
+
+![](minecraft-server-running.png)
+
+Server is Now Running
 
 Everything is ready and we now should be able to join our new server! Let’s give it a shot.
 
-Connect to The Game Using Your Server’s Public IP Address (I Hide Mine For Security Reasons /sorry/)We Have Successfully Joined! It Works!! (/don’t mind the shell scripts on my desktop pls/)
+![](connect-to-minecraft-server.png)
+
+Connect to The Game Using Your Server’s Public IP Address (I Hide Mine For Security Reasons /sorry/)
+
+![](joined-to-the-server.png)
+
+We Have Successfully Joined! It Works!! (/don’t mind the shell scripts on my desktop pls/)
 
 Web Server (/w Flask)
 =====================
 
 Currently we have a game server running on our cloud machine and we are able to connect to it from virtually anywhere in the world. Now, let’s try to deploy an actual web server shall we?
 
+![](flask-logo.png)
+
 Flask Logo — Source: wikimedia.org
 
 Let’s admit it. The web application I have written in the previous article kinda sucks. It can only print ‘Hello’ to the server console and that’s it. Can we even call it a web ‘application’? We should try to deploy a more realistic web application.
+
+![](github-flask-example.png)
 
 Github Page of The ‘flask-example’
 
 Fortunately, I was lucky enough to find a Git-Hub project called ‘flask-example’. Like it’s name suggests, it is a minimalistic web application written using the Flask framework. You can check it out for yourself from the link below
 
-```
-**flask-example:** A minimal web app developed with Flask framework.  
+```text
+flask-example: A minimal web app developed with Flask framework.  
   
 https://github.com/XD-DENG/flask-example
 ```
 
 The project’s README file explains this application as:
 
-```
+```text
 A minimal web app developed with Flask framework.  
   
 The main purpose is to introduce how to implement the essential elements in web application with Flask, including  
   
-\* URL Building  
-\* Authentication with Sessions  
-\* Template & Template Inheritance  
-\* Error Handling  
-\* Integrating with Bootstrap  
-\* Interaction with Database (SQLite)  
-\* Invoking static resources
+* URL Building  
+* Authentication with Sessions  
+* Template & Template Inheritance  
+* Error Handling  
+* Integrating with Bootstrap  
+* Interaction with Database (SQLite)  
+* Invoking static resources
 ```
 
 As you can see it is objectively a better web application that we can use.
@@ -355,14 +422,14 @@ Okay, Let’s get to work!
 Prerequisites (Allow Port Number 80)
 ------------------------------------
 
-Just like we did with our Minecraft server, we need to add a firewall/security rule on our firewall so that the \[HTTP\] packets can ‘pass’ the firewall. The rule is to allow **any incoming/outgoing packets (TCP only)** that uses the **port number 80**.
+Just like we did with our Minecraft server, we need to add a firewall/security rule on our firewall so that the [HTTP] packets can ‘pass’ the firewall. The rule is to allow **any incoming/outgoing packets (TCP only)** that uses the **port number 80**.
 
 > Remember that the HTTP protocol uses the port number 80 and the HTTPS uses 443.
 
 Below are the rule that you need to add to your firewall.
 
-```
-**Firewall/Security Rule 1.** Allow TCP connections from 0.0.0.0/0 (anyone) to access port 80
+```text
+Firewall/Security Rule 1. Allow TCP connections from 0.0.0.0/0 (anyone) to access port 80
 ```
 
 You can follow the same steps from the previous section ‘Prerequisites (Allow Port 25565)’. However you need to allow port 80, instead of 25565. Return to that section, and come back here after you have configured your firewall/security rules.
@@ -371,10 +438,14 @@ You have done it? Okay, let’s continue.
 
 Just like we did before, we should test the port number 80 using ‘nmap’.
 
+```bash
+# Scan for port number 80 (HTTP)  
+$ sudo nmap -p80 <SERVER_IP_ADDRESS>
 ```
-\# Scan for port number 80 (HTTP)  
-$ sudo nmap -p80 <SERVER\_IP\_ADDRESS>
-```The Port 80 is Open!
+
+![](nmap-scan-result-2.png)
+
+The Port 80 is Open!
 
 After that, your cloud machine can now use the port number 80! We are done with firewall/security settings. Let’s move forward
 
@@ -387,8 +458,8 @@ Flask is a web framework written in Python. In order for it the work, we need to
 
 However you can still install the ‘python3’, if your distro does not have it.
 
-```
-\# Install python3  
+```bash
+# Install python3  
 $ sudo apt install python3
 ```
 
@@ -399,13 +470,16 @@ Okay, we have python3 installed (thanks to Ubuntu). Now we need a special packag
 
 The below command installs the python3 package ‘pip’.
 
-```
-\# Install 'pip'  
+```bash
+# Install 'pip'  
 $ sudo apt install python3-pip  
   
-\# Check if 'pip' is installed correctly  
+# Check if 'pip' is installed correctly  
 $ python3 -m pip --version
-```Pip is Installed Correctly
+```
+![](install-python-pip.png)
+
+Pip is Installed Correctly
 
 Installation
 ------------
@@ -414,18 +488,18 @@ The groundwork is now done. Let’s install our ‘flask-example’ application!
 
 First, we need to download the project using the ‘git’ command.
 
-```
-\# Clone the git repository  
+```bash
+# Clone the git repository  
 $ git clone --depth 1 https://github.com/XD-DENG/flask-example.git
 ```
 
 Second, we need change directory into ‘flask-example’ and install it’s python3 requirements. This will install the necessary python3 packages, including the long awaited **Flask framework**!
 
-```
-\# Change directory into 'flask-example'  
+```bash
+# Change directory into 'flask-example'  
 $ cd flask-example  
   
-\# Install the required python3 packages  
+# Install the required python3 packages  
 $ sudo python3 -m pip install -r requirements.txt
 ```
 
@@ -433,12 +507,14 @@ $ sudo python3 -m pip install -r requirements.txt
 > 
 > I will contact the project author about this. Luckily, the fix is rather easy.
 
+![](flask-example-error.png)
+
 This is The Error We Will Get if We do Not Upgrade to Flask Version 2.x
 
 We need to ‘upgrade’ the Flask version to 2.0 or newer. You can follow the command below.
 
-```
-\# Upgrade the 'flask' package to the latest version  
+```bash
+# Upgrade the 'flask' package to the latest version  
 $ sudo python3 -m pip install flask --upgrade
 ```
 
@@ -447,16 +523,24 @@ Testing
 
 Before we deploy the application itself, let’s test it and see if it works. Follow the below command to run the application.
 
-```
-\# Run the web application in development mode  
+```bash
+# Run the web application in development mode  
 $ python3 app.py
-```The Application is Running
+```
+
+![](flask-server-running.png)
+
+The Application is Running
 
 Let’s use a web browser to acces it. Type your cloud machinec public IP into the browser.
+
+![](flask-example-website.png)
 
 The Welcoming Page For The ‘flask-example’ Web App
 
 You can try to login using one of the default users. Let’s try the username ‘admin’ with the password ‘admin’.
+
+![](flask-example-website-2.png)
 
 We Can Login to The System (Session’s Are Working)
 
