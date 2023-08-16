@@ -25,27 +25,30 @@ If you have missed the previous parts you can check them out from the using the 
 TLDR;
 =====
 
-```
-**TCP/IP Model:** An architecture that is used when sending packets through a network  
+```text
+TCP/IP Model: An architecture that is used when sending packets through a network  
   
-**Application Layer:** Represents the type/protocol of a packet (ex. HTTP)  
-**Transport Layer:** Represents the method/protocol used for delivering a packet (ex. UDP)  
-**Internet Layer:** Represents the protocol used for routing a packet in a network (ex. IP)**Network Access Layer:** Represents the hardware used for delivering a packet (ex. Wi-Fi)  
+Application Layer: Represents the type/protocol of a packet (ex. HTTP)  
+Transport Layer: Represents the method/protocol used for delivering a packet (ex. UDP)  
+Internet Layer: Represents the protocol used for routing a packet in a network (ex. IP)
+Network Access Layer: Represents the hardware used for delivering a packet (ex. Wi-Fi)  
   
-**Ports:** Virtual sockets that allows an IP to be used by many software apps in an OS  
-**ss:** A Linux command that is used to monitor ports  
+Ports: Virtual sockets that allows an IP to be used by many software apps in an OS  
+ss: A Linux command that is used to monitor ports  
   
-**UDP:** A protocol that delivers packets without any checks (fast, but not realiable))  
-**TCP:** A protocol that delivers packets in a controlled way (slower, but reliable)  
-**WireShark:** A program that is used to monitor packets for a network interface  
+UDP: A protocol that delivers packets without any checks (fast, but not realiable))  
+TCP: A protocol that delivers packets in a controlled way (slower, but reliable)  
+WireShark: A program that is used to monitor packets for a network interface  
   
-**Firewall:** A software/hardware layer that filters incoming/outgoing packets in an OS
+Firewall: A software/hardware layer that filters incoming/outgoing packets in an OS
 ```
 
 The Setup
 =========
 
 I have setup an example network using my personal machines (local & cloud). This way I can give better visual examples and help you in this journey.
+
+![](my-network-setup.png)
 
 My Basic Network Setup
 
@@ -59,6 +62,8 @@ A Story
 I want you to do something. Imagine that you are the captain of a big ship. You travel across oceans to deliver valuable cargo. You visit many different countries. UK, Italy, Greece, India, Japan… you name it.
 
 Now, every time you visit one, you park your ship on that country’s port. You load up the cargo and departure from the port to begin your journey. After crossing the ocean and fighting with big waves, you finally arrive at the destination country and park your ship at it’s port. The crew there then will unload your cargo and in the end you will get your reward (sweet money)!
+
+![](cargo-ship.jpeg)
 
 A Cargo Ship Approaching the Port — Source: unsplash.com by william07
 
@@ -84,6 +89,8 @@ When we talk to other devices in a network, we send them messages called **packe
 
 To send a packet through the network, we need to **package them** so the Linux can know how and _where_ to send it. There are many packaging that happens to your packets before they are sent over the network. First, check out the below picture.
 
+![](tcp-ip-model.jpeg)
+
 TCP/IP Model (Middle) — Source: imperva.com
 
 > This picture is a VERY POPULAR networking model that shows us how our packet is packaged and sent over the network. For the ELI5 purposes we will focus on the TCP/IP model. And go over each of these 4 layers.
@@ -95,6 +102,8 @@ Ports (Application Layer)
 
 How you ever wondered how you can browse, watch Netflix, play online games and all kinds of networking stuff WHILE using a single IP address? How is that my Spotify stream is not mixing up with my Overwatch game? Well, the answer is ports!
 
+![](multiple-ports-same-ip.png)
+
 I Can Stream Music, Download a File and Play Online Games Using The Same IP
 
 Ports are network endpoints in Linux (and other operating systems). Linux assigns ports to each IP address in order to separate programs that uses the same IP address. For example; 2 different programs can use the same IP address, but they will use 2 different ports so that their connections are not mixed together.
@@ -105,19 +114,19 @@ Ports are network endpoints in Linux (and other operating systems). Linux assign
 
 Ports are numbered from 0 to 65535. So in total, we have 65535 different ports to choose from and each one of them is used for a different purpose. Here’s some of the most commonly used ports numbers.
 
-```
-**21**: Used for transfering files (FTP)  
-**22**: Used for secure shell connections (SSH)  
-**80**: Used for browsing the web (HTTP)  
-**443**: Used for securily browsing the web (HTTPS)  
-**587**: Used for sending/recieving emails (SMTP)
+```text
+21: Used for transfering files (FTP)  
+22: Used for secure shell connections (SSH)  
+80: Used for browsing the web (HTTP)  
+443: Used for securily browsing the web (HTTPS)  
+587: Used for sending/recieving emails (SMTP)
 ```
 
 Depending on the application’s purpose (web server, game server) different ports will be used. For example; almost all web servers uses the port number 443 or a typical Minecraft server will be using the port number 25565. But there are so many different ports, how do we choose which one to use?
 
 There are currently 3 categories for port numbers. These are:
 
-```
+```text
 0 - 1023: Most commonly used ports (HTTPS, FTP, SSH and etc)  
 1024 - 49151: Custom ports for specific apps (Game servers, Video streamning)  
 49152 - 65535: Dynamic ports for temporary connnections (When requesting smth.)
@@ -127,17 +136,21 @@ Most of the time we will be using the ports 0–1023. The rest are for custom ap
 
 Alright ports are cool and all, can I see which ports are in use on my Linux? Of course you can! Check out the command ‘ss’.
 
-```
-\# The 'ss' command has some options  
+```bash
+# The 'ss' command has some options  
   
-\# -a Shows all connections (listening or not)  
-\# -n Show IP and Port numbers (do not resolve DNS)  
-\# -t Show TCP connections  
-\# -u Show UDP connections  
+# -a Shows all connections (listening or not)  
+# -n Show IP and Port numbers (do not resolve DNS)  
+# -t Show TCP connections  
+# -u Show UDP connections  
   
 $ ss <OPTIONS>  
 
-```‘ss’ Command Output
+```
+
+![](ss-command-output.png)
+
+‘ss’ Command Output
 
 Here you can see that using the ‘ss’ command, we can get a pretty good amount of information about Linux network ports. Let’s analyze the output and discuss about them.
 
@@ -146,6 +159,8 @@ Starting from the left, we can see the ‘netid’ column. This can be either of
 Recv-Q and Send-Q are waiting queues. This tells that how much data is waiting in the queue for that specific port.
 
 Now we come to the important columns. Each network connection happens between two machines (we know this already). These machines have IPs and programs that makes the actual connection. We can see from the ‘ss’ command that which IP addresses are connected and in which ports.
+
+![](ip-and-port.png)
 
 Every IP Address Must be Followed by a Port Number or Preceded by a Protocol Name
 
@@ -160,6 +175,8 @@ We have two options in front of us. We can either send the packet directly, with
 
 These two options are called UDP and TCP. Let’s take a closer look at them, shall we.
 
+![](boats-udp-tcp.png)
+
 We Can Compare UDP to a Speed Boat and TCP to a Cargo Ship
 
 UDP
@@ -170,6 +187,8 @@ The first way to deliver a packet is to just send it. No validation, no checking
 When an application wants to send the packet, it can choose the UDP to deliver it as fast as possible. Since there are no checks and controls, UDP provides us a really fast and low latency delivery.
 
 > UDP does not establish a connection with the destination. For this reasons, it’s called a connectionless protocol.
+
+![](video-game-udp.jpeg)
 
 Almost All Online Games Uses UDP in Gameplay (Because of Low Latency) — Source: ign.com
 
@@ -190,9 +209,13 @@ This type of delivery is a smarter way to send a packet. Before it sends the pac
 
 TCP, talks with the destination before sending a packet. This way a connection is established between two machines. After a connection, the packet is expected and will be welcomed by the destination. This method is called a 3-way handshake.
 
+![](3-way-handshake-tcp.png)
+
 3-Way Handshake Used by TCP (This Way A Connection is Established) — Source: dev.to
 
 We can trust TCP that it will deliver our packet correctly and safely. But all this reliability comes with a cost. A typical TCP delivery includes error-checking, traffic flow control, 3-way handshake and more to deliver a packet safely. As you can guess, these operations will cause some latency and slower speed compared to UDP.
+
+![](udp-tcp-meme.jpeg)
 
 TCP Might be More Reliable But UDP is Still Faster and Has Low Latency — Source: twitter.com
 
@@ -217,9 +240,13 @@ So far we have learned about the TCP/IP model. Now, let’s see it in action. I 
 
 I have made very simple HTTP server using Flask. We will see how to make one in the next part don’t worry! For now, all we need to know is that this server listens on port 4001 and prints whatever we put in the packet
 
+![](http-packet.png)
+
 Sending a Simple Packet With a “Hello” Text
 
 Let’s see this packet in WireShark for further analysis.
+
+![](wireshark-output.png)
 
 All of The Packets That Sent From a Simple “Hello” Text
 
@@ -227,17 +254,19 @@ As you can see from the above picture, there are many packets that being sent ju
 
 Let’s focus on the ACTUAL packet (frame 8) for more details.
 
+![](wireshark-output-2.png)
+
 This is All The Information Inside a Packet
 
 From the above picture, we can make up the TCP/IP model from ground up.
 
-```
-**Frame 8:** The frame that was sent by the network interface (Network Access Layer)  
-**Ethernet II Src**: The machine that made the 'Frame 8' request (Network Access Layer)  
-**Internet Protocol Version 4**: The IPv4 protocol (Internet Layer)  
-**Transmission Control Protocol:** The TCP protocol (Transport Layer)  
-**Hypertext Transer Protocol**: The HTTP protocol (Application Layer)  
-**JavaScript Object Notation:** The actual data "Hello" itself (My Message)
+```text
+Frame 8: The frame that was sent by the network interface (Network Access Layer)  
+Ethernet II Src: The machine that made the 'Frame 8' request (Network Access Layer)  
+Internet Protocol Version 4: The IPv4 protocol (Internet Layer)  
+Transmission Control Protocol: The TCP protocol (Transport Layer)  
+Hypertext Transer Protocol: The HTTP protocol (Application Layer)  
+JavaScript Object Notation: The actual data "Hello" itself (My Message)
 ```
 
 Okay this is cool! We can actually see the TCP/IP model being used in real-life thanks to WireShark. Of course, we can learn many more things about the packets that’s being sent over the network. But, for our purposes this is more than enough. If you want to learn more, check out the WireShark for youself. It’s a really good program for network learning purposes.
@@ -251,15 +280,15 @@ A firewall is a security system that controls access to a network or computer by
 
 It works by following a set configurations called ‘rules’. These rules define who is allowed to enter and who is not. For example, I can add a rule to my firewall that blocks all connections from the IP address ‘192.168.1.50’. Or I can deny any packets that uses the port number ‘80’. Below are the types of rules that can be given to a firewall.
 
-```
-**Allow/Deny Incoming Requests From The IP <IP\_ADDR>  
-Allow/Deny Outgoing Requests to The IP <IP\_ADDR>  
+```text
+Allow/Deny Incoming Requests From The IP <IP_ADDR>  
+Allow/Deny Outgoing Requests to The IP <IP_ADDR>  
   
-Allow/Deny Incoming Requests From The Subnet <SUBNET\_ADDR>  
-Allow/Deny Outgoing Requests to The Subnet <SUBNET\_ADDR>  
+Allow/Deny Incoming Requests From The Subnet <SUBNET_ADDR>  
+Allow/Deny Outgoing Requests to The Subnet <SUBNET_ADDR>  
   
 Allow/Deny Incoming Requests to The Port Number <PORT>  
-Allow/Deny Outgoing Requests From The Port Number <PORT>**
+Allow/Deny Outgoing Requests From The Port Number <PORT>
 ```
 
 As you can see, there are many ways to configure a firewall. Generally, we want to block/deny all incoming requests and only allow some IPs or port numbers.
@@ -279,36 +308,47 @@ Uncomplicated firewall, short for ‘ufw’, is a firewall tool that comes defau
 
 First, things first. In order to use ‘ufw’ we need to check if it is enabled. If it is not, then we should enable it.
 
-```
-\# Check the status of 'ufw'  
+```bash
+# Check the status of 'ufw'  
 $ sudo ufw status  
   
-\# Enable/disable 'ufw'  
+# Enable/disable 'ufw'  
 $ sudo ufw enable|disable
-```I have Enabled ‘ufw’ by Checking it’s Status First
+```
+
+![](ufw-command.png)
+
+I have Enabled ‘ufw’ by Checking it’s Status First
 
 By default, the ‘ufw’ will not have any rules and all incoming packets will be **DENIED** by the system! In my case, I am using the port 22 (SSH) to acces my Raspi. So, I will allow incoming connections to the port 22.
 
+```bash
+# Allow all access to a certain port number or a protocol  
+# For example. I can type 22 or SSH to allow SSH connections  
+
+$ sudo ufw allow <PORT_NO>|<PROTOCOL_NAME>
 ```
-\# Allow all access to a certain port number or a protocol  
-\# For example. I can type 22 or SSH to allow SSH connections  
-$ sudo ufw allow <PORT\_NO>|<PROTOCOL\_NAME>
-```I have Allowed All Access to The Port 22
+
+I have Allowed All Access to The Port 22
 
 Now, let’s make things interesting. I want to allow the IP 192.168.1.50 to access ports number 22 and 5000, but nothing else. And I also want to allow the IP 192.168.1.75 to access everything but the port number 22 and 5000. Let’s use ‘ufw’ to do it!
 
-```
-\# Default behaviour is to DENY every IP from accessing any PORT  
+```bash
+# Default behaviour is to DENY every IP from accessing any PORT  
 $ sudo ufw default deny  
   
-\# Allow 192.168.1.50 to only access ports 22 and 5000  
+# Allow 192.168.1.50 to only access ports 22 and 5000  
 $ sudo ufw allow from 192.168.1.50 to any port 22  
 $ sudo ufw allow from 192.168.1.50 to any port 5000  
   
-\# Allow 192.168.1.75 to acces all ports between 0-21, 23-4999 and 5001-65535  
+# Allow 192.168.1.75 to acces all ports between 0-21, 23-4999 and 5001-65535  
 $ sudo ufw allow proto tcp from 192.168.1.75 to any port 1:21,23:4999,5001:65535  
 $ sudo ufw allow proto udp from 192.168.1.75 to any port 1:21,23:4999,5001:65535
-```New Firewall Rules After Executing The Above Commands
+```
+
+![](ufw-command-3.png)
+
+New Firewall Rules After Executing The Above Commands
 
 You can see the newly added rules from the above image. Let’s test them.
 
@@ -317,12 +357,24 @@ I have an sshd server running on port 22 and two simple HTTP servers running on 
 Testing Rules For IP Address 192.168.1.50
 -----------------------------------------
 
-The IP 192.168.50 Can Acces Ports 22 and 5000But it Can’t Access Port 3000 (Because The Firewall Blocks it)
+![](test-ufw-rules.png)
+
+The IP 192.168.50 Can Acces Ports 22 and 5000
+
+![](test-ufw-rules-2.png)
+
+But it Can’t Access Port 3000 (Because The Firewall Blocks it)
 
 Testing Rules For IP Address 192.168.1.75
 -----------------------------------------
 
-The IP 192.168.1.75 Can’t Access Ports 22 and 5000But it Can Access Other Ports Such as 3000
+![](test-ufw-rules-3.png)
+
+The IP 192.168.1.75 Can’t Access Ports 22 and 5000
+
+![](test-ufw-rules-4.png)
+
+But it Can Access Other Ports Such as 3000
 
 Closing Words
 =============
