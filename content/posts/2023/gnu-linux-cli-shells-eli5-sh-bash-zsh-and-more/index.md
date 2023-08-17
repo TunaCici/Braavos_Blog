@@ -2,7 +2,7 @@
 title: "GNU/Linux CLI Shells ELI5: sh, bash, zsh and more"
 tags:
 - linux
-- networking
+- shells
 - eli5
 date: 2023-04-05T00:00:00Z
 header_image_alt: "Some Basic GNU/Linux Commands"
