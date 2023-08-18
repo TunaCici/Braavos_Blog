@@ -45,6 +45,9 @@ menu:
     - name: Contact
       url: /contact/
       weight: 4
+    - name: Terminal
+      url: "https://tunacici.com/terminal/"
+      weight: 4
 
 markup:
   highlight:
