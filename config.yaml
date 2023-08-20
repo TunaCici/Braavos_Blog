@@ -19,7 +19,7 @@ params:
     - name: github
       link: https://github.com/TunaCici
     - name: discord
-      link: http://discordapp.com/users/tunacici
+      link: http://discordapp.com/users/385071876524998656
     - name: linkedin
       link: https://www.linkedin.com/in/tuna-cici/
     - name: mastodon
@@ -44,9 +44,6 @@ menu:
       weight: 3
     - name: Contact
       url: /contact/
-      weight: 4
-    - name: Terminal
-      url: "https://tunacici.com/terminal/"
       weight: 4
 
 markup:
