@@ -1,6 +1,6 @@
 baseURL: https://tunacici.com/blog/
 languageCode: en-us
-title: tunacici
+title: Tuna Cici (Blog)
 theme: cactus
 permalinks:
   posts: /:year/:month/:title/
