@@ -72,7 +72,72 @@ The one we are focusing on is AArch64. But before we move on to that, let's talk
 Machine Registers
 =================
 
-TODO.
+There are many registers defined in AArch64 and the availability of them depends on the architecture version (e.g., ARMv8 vs. ARMv9) and the platform vendor. However, all of them are at least expected to implement the basic register banks: general-purpose and (optionally) SIMD. We will focus on general-purpose registers and what their purposes.
+
+insert AArch64 general-purpose related image here
+
+AArch64 provides 31 general-purpose registers, each 64 bits wide. They are named X0 … X30. Although the general-purpose registers are equal and interchangeable at the architecture level, in practice their purpose is defined by the AAPCS64 and most sane compilers/programmers adhere to it.
+
+> The following sections are taken from Maria Azeria Markstedter's ARM Assembly: Internals & Reverse Engineering Book. Shout out to her for the great book!
+
+X0-X7
+=====
+
+These registers are used for argument registers to pass parameters and return a result. More on this later.
+
+X8
+===
+
+Pointer to where to write the return value if >128 bits, otherwise scratch register. It can be used to pass the address location of an indirect result.
+
+X9–15
+=====
+
+These are caller-saved temporary registers used to preserve values across a call to another function. The affected registers are saved in the stack frame of the caller function, allowing the callee function to modify these registers.
+
+X16-X17
+=======
+
+These are intraprocedure-call temporary registers that can be used as temporary registers for immediate values between function calls. They can be used for ordinary computations within any given function. However, AAPCS64 gives them a different purpose.
+
+For example, if a program calls a function defined in a shared library such as malloc(), this function call may be implemented via a call through the procedure linkage table (PLT) to call the malloc() implementation inside another module.
+
+The PLT stub responsible for find and transferring execution to the malloc() function in the other library can use the X16 and X17 registers as intraprocedural call registers freely, without having to take care not to corrupt their values. LLVM, for example, will compile PLT stubs that make use of X16 and X17. 
+
+> Also see GCC's veneer for more examples on X16 and X17 usage.
+
+insert X16 and X17 example usage here
+
+X18 (Platform Register)
+=======================
+
+The X18 platform is a general-purpose register like any. The AAPCS, however, reserves it to be the platform register, pointing to some platform-specific data. More on this later.
+
+X19-X28
+=======
+
+These are callee-saved registers that are saved in the stack frame of the called function, allowing the function to modify these registers but also requiring it to restore them before returning to the caller.
+
+X29 (FP)
+========
+
+It is used as a frame pointer (FP) to keep track of the stack frame. More on this later.
+
+X30 (LR)
+========
+
+It is the link register (LR) holding the return address of the function. More on this later.
+
+insert table of general-purpose registers here
+
+SIMD and Floating-Point Registers
+=================================
+
+In addition to the 64-bit general-purpose registers, AArch64 also supplies a series of 32 x 128-bit vector registers for use in optimized single instruction multiple data (SIMD) operations for performing floating-point arithmetic. These registers are each 128-bits long and named V0 … V31.
+
+Similar to general-purpose registers, V0 … V7 the  first eight SIMD registers are used for argument registers to pass parameters and return a result. The rest is either used as scratch registers. However, there are some calling convention details. More on this later.
+
+insert SIMD registers for AArch64 here
 
 AAPCS64
 =======
