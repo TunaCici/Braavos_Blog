@@ -142,4 +142,102 @@ insert SIMD registers for AArch64 here
 AAPCS64
 =======
 
-TODO.
+Most platform's author/owner describes their calling conventions for public use. After all that's what they are meant for: for everyone to use and adapt. We are currently only interested in Arm's.
+
+Arm® Architecture describes their calling conventions on their GitHub page named Procedure Call Standard for the Arm® 64-bit Architecture (AArch64). We will shortly call it: AAPCS64. 
+
+There are other documents on that Arm's GitHub page that further describes their ABI. Check them out if you are curious!
+
+insert Arm ABI documents and their purpose for 64-bit here
+
+Inside the AAPCS64 there are multiple sections and each deserve their own writings. We are only going to talk about calling conventions, but for the curious: here's other sections that's described in it:
+
+* Data Type and Alignment
+* The Base Procedure Call Standard
+* Standard Variations
+* C and C++ Language Mappings
+
+AAPCS64 is kind of a long and it would be pointless to explain everything in it. I will only talk about the parts that I consider to be the most useful when doing casual programming for AArch64 platforms.
+
+Parameter Passing
+=================
+
+Naturally, [on any language] when calling a function the caller and the callee must agree on how the parameters must be passed around on machine level. AAPCS64 defines this in Section 6. The Base Procedure Call Standard. It describes that:
+
+* X0 … X7: Should be used for the first eight (8) parameters
+* Stack: Should be used for any additional parameters
+
+I think it is pretty straightforward. We can even see this in action. Let's look at an example C function with 4, 8 and 12 parameters.
+
+insert C function with 4, 8 and 12 parameters and it's machine code here
+
+As you can see the first (1st) parameter is stored in X0, second (2nd) in X1, third (3rd) in X2 and so on… After the eight (8th) the additional parameters are stored in thread stack. This is where things get interesting.
+
+Stating the obvious: CPU registers are fast and stack memory is slow. We want to stay away from accessing the memory as much as possible. Generally, compilers are pretty good at optimizing on this and you won't have to worry about the amount of parameter a function takes.
+
+Sometime, however, you might need those extra nano/microseconds (e.g., low-latency systems).
+
+Result Return
+=============
+
+This one, again, is pretty straightforward and clear. AAPCS64 states that the function return value should be stored in:
+
+* X0 
+
+You can see from the below C function that the uint64_t return value is stored in X0 before the call to RET (function return).
+
+insert C functions that returns the value in X0 here
+
+> Personal note: I always wondered why C/C++ functions always returned one (1) value. What if I want to return two values like 2D coordinates of {x, y}? Well, now I know: the ABI just doesn't support it. Probably for good reasons. 
+
+> Obviously, I learned about objects/structs and then used them to "return more than one (1) value". But still, at the machine code level, a function still returns one (1) value: reference/pointer of an object.
+
+The Stack
+=========
+
+Almost all modern languages use the concept of stack. They are used for various reasons. I would like to give examples but am no language designer;( One thing I know is that they are used when calling functions.
+
+The next parts assume that any language is designed to make use of the stack. There are, however, languages that DON'T have stack. See Parrot or other functional languages.
+
+Each thread in a program has its own stack. According to AAPCS64, a stack is a continuous memory region that the thread can use for storage of local variables and for passing additional arguments [if the first eight (8) register are insufficient].
+
+insert stack representation in a C program here
+
+The concept of stack is a pretty big topic and [again] deserves it's own writing. From now on I will assume that you have some familiarity with the thread stack in C.
+
+In AAPCS64, a stack is defined to have the following three (3) values:
+
+* Base: base of the stack (e.g., 0x800)
+* Limit: limit of the stack (e.g., 0x400)
+* Current Extent: current tack pointer (SP) (e.g., 0x600)
+
+The SP is basically a pointer that moves from base to limit as the stack grows. And from limit to base as the stack shrinks. Below is a visualization on this concept.
+
+insert basic AAPCS64 stack visualization here
+
+AAPCS64 further defines the stack to be full-descending. Now, there are four (4) different stack organizations. I am not going to explain them here as there is a great note about them by John Winans. I highly recommend you to read at is it's very informative and pretty short. It shouldn't take more than 15 minutes to understand it.
+
+insert full-descending stack visualization here
+
+Last, but not least, the AAPCS64 uses the stack to passing parameters. If there are more than eight (8) parameters, that is the X0 … X7 is already used, then the rest is put in stack. Below is an example C function and it's machine code that shows how stack is used to pass parameters.
+
+insert C function that uses stack to pass parameters here
+
+Machine Registers
+=================
+
+Like we have seen before, Arm 64-bit architecture defines two mandatory register banks: general-purpose and SIMD. Technically, you can use them however you want, but in practice each have their own purposes defines by AAPCS64.
+
+Let's talk about each of those registers.
+
+X0 … X7: These register are used to pass the first eight (8) parameters into a function. The caller fills these register and then the callee function can use them however it sees fit. 
+
+Before the function returns, the X0 must be updated by the callee to store the function return value. However, if the return type is void or not used, compilers can optimize this away.
+
+insert optimized X0 return value register here
+
+X8: Also known as indirect result register. Frankly, I don't think the usage of this is not very well defined. AAPCS64 states that "This is used to pass the address location of an indirect result, for example, where a function returns a large structure." From what I gather around the internet, each OS (e.g., Windows) and language (e.g., C++) uses it a bit differently.
+
+Basically, if an object is too big to fit into a 64-bit register (or divided into multiple ones) the caller reserves a memory region (via stack or heap) and then passes a pointer/reference to it inside the X8 register. After that, the callee is able to access to that [big] object. Below is a basic example on this.
+
+insert big ahh C structure that's passed onto a function here
