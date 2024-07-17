@@ -297,10 +297,130 @@ AAPCS64 further details that before calling a function and modifying the link re
 Caller-Saved & Callee-Saved
 ===========================
 
-Now this is a new term we just saw: caller-saved registers. They are general-purpose registers that are assumed by the callee to be "clobbered" after a function call. To understand what this means let's look at an example in both the callers and callees perspectives.
+When I first saw these terms, I was confused. Why would someone categorize the scratch registers into caller & callee saved? Why shouldn't I just use them however I want? Technically, yes, you can use them freely. But, there are two things  you need to be aware of: optimization and modularity.
 
-Example: Let's say you have a for loop. The loop does some calculations and then calls for a function. Inside the function, even more calculations are done before returning. Our goal is to optimize the usage of scratch register. We want to use them and keep away from the stack memory as much as possible (the less str / ldr used the better).
+Remember the following:
+* X0 … X7: Used to pass the first eight (8) parameters
+* X9 … X15: Caller-saved registers
+* X19 … X28: Callee-saved registers
 
-insert register vs stack here
+Let's talk about an example C++ code. Don't worry about the naming and such; I created it just to show how registers are used within GCC.
 
-TODO.
+```c
+uint64_t loop(uint64_t a, uint64_t b, uint64_t c, uint64_t d, uint64_t e, uint64_t f, uint64_t g, uint64_t h) {
+    uint64_t result = 0;
+
+    for (int i = 0; i < 16; ++i) {
+        // Random calculations on the function parameters
+        a += b + c * d;
+        b ^= e >> 2;
+        c *= f + g;
+        d -= h * a;
+        e += f ^ g;
+        f = (g << 3) - d;
+        g += h * e;
+        h = a | b | c;
+
+        // Call another function
+        result += calc(a, b, c, d, e, f, g, h);
+    }
+
+    return result;
+}
+```
+
+All it does is just do some calculations on eight (8) different variables, with each being taken as a parameter. After that, they are all passed to another function that does even more calculation. Let's see it.
+
+```c
+uint64_t calc(uint64_t a, uint64_t b, uint64_t c, uint64_t d, uint64_t e, uint64_t f, uint64_t g, uint64_t h) {
+    // Local variables
+    uint64_t a1 = a + 42, b1 = b + 42, c1 = c + 42, d1 = d + 42;
+    uint64_t e1 =  e+ 42, f1 = f + 42, g1 = g + 42, h1 = h + 42;
+
+    // More local variables
+    uint64_t i = a + 10, j = b + 20, k = c + 30, l = d + 40;
+    uint64_t m = e + 50, n = f + 60, o = g + 70, p = h + 80;
+
+    // Random calculations on the local variables
+    a1 += b1 - c1 * d1;
+    b1 ^= e1 << 1;
+    c1 *= f1 - g1;
+    d1 += h1 / a1;
+    e1 += f1 ^ g1;
+    f1 = (g1 >> 2) + d1;
+    g1 -= h1 * e1;
+    h1 = a1 & b1 & c1;
+
+    i += j * k - l;
+    j ^= m >> 3;
+    k *= n + o;
+    l -= p * i;
+    m += n ^ o;
+    n = (o << 2) - l;
+    o += p * m;
+    p = i | j | k;
+
+    // Return the result [X0]
+    uint64_t result = a1 + b1 + c1 + d1 + e1 + f1 + g1 + h1 + i + j + k + l + m + n + o + p;
+
+    return result;
+}
+```
+
+Basically calc(...) is just more calculation. But this time the amount of variables incresed. It now has sixteen (16) local variables with each being used to calculate the final result (X0).
+
+Our problem is this: Generate a good & efficient machine code that utilizes register usage instead of accessing the memory using the AAPCS64.
+
+Option 1) Use stack to save those registers
+
+This is the naive way of doing this. The code becomes simpler, yes. But you would be accessing the memory way more often. All those sweet scratch registers are sitting empty;( Meaning, you are missing out on optimization!
+
+Here's the ARM64 gcc 13.2.0 compiler with no optimization. Also, see the full code on godbolt.org: https://godbolt.org/z/T9GKG96Tz
+
+insert option 1) godbolt.org output here
+
+Option 2) Use the scratch registers:
+
+Now the fun begins by thinking smart. We have the following 25 register at our disposal: X0 … X7, X9 … X15 and X19 … X28. We could just save each variable to an empty register. But what if someone were using that (e.g., previous function)? We can't just assume they are free to use, otherwise we risk corrupting the whole program.
+
+What we can do is push ALL the registers onto the stack and freely use the registers. After we are done, we could just pop them out. Alright… we are getting somewhere. However, still we are accessing the stack, still we are accessing the memory! There must be a smarter way of doing this.
+
+It seems we need a way to tell which registers are free to use. So that can avoid pushing ALL register to stack vs. SOME registers. And guess what? AAPCS64 explicitly talks about this!
+
+insert AAPCS64 caller-saved and caller-saved registers here
+
+Here, we are introduced to caller-saved and callee-saved registers. I'm not going to repeat what's written in AAPCS64. Instead, I will give you the intuition. 
+
+Caller-saved registers ( X9 … X15). If you DO NOT care about what happens to a temporary value after a function call, then use these registers. They are also called volatile registers for this exact reason. The values MIGHT be changed by the function, so DO NOT use them to store values you want to keep after a function call.
+
+* From the caller's perspective: Assume registers are to be destroyed 
+* From the callee's perspective: Freely use the registers
+
+> You might wonder, then why they are named caller-saved? Frankly, idk. The caller COULD save them to stack if it wants, but does NOT have to. So, I (and many others) think the name is misleading.
+
+Callee-saved registers ( X19 … X28). If you DO care about the retaining a temporary value after a function call, then use these registers. They are also called non-volatile registers for this exact reason. Assume that the values are to be RETAINED and you must save them to the stack before doing anything to them. Interesting thing her is it is NOT the caller, but the callee that should save them. As to why? I don't know.
+From the caller's perspective: Do nothing. They won't be changed
+From the callee's perspective: Save them to stack & then restore after
+
+insert caller-saved vs. callee-saved registers here
+
+Now, we have enough information on our hand about the scratch registers. We can use this to optimize our code. As to how? I don't really know. This is an area where compiler engineers work to optimize. Each different compiler and their version will use these registers differently.
+
+Let's look at the code generated by ARM64 gcc 13.2.0 with the -O1 optimization flag. Also, see the full code on godbolt.org: https://godbolt.org/z/ETc81YadG
+
+insert option 2) godbolt.org output here
+
+Notice how BOTH the caller-saved and callee-saved registers are used. Again, how compilers decide on which to use depends on its design & goals.
+
+Closing Words
+=============
+
+And with all that, we know have a little bit more information about AAPCS64 and how calling conventions work. There is a lot to unpack here. Don't feel bad if you don't understand each and everything. Just keep reading, practicing and learning. I highly encourage you to come to this writing again after a couple of weeks. After some time, your brain would be done processing everything. By reading this again, everything then would make a lot more sense. And who knows, maybe you would learn A NEW thing you missed during the first time.
+
+I want to point out that lot's of details were left out to keep things simple & straightforward. AAPCS64 is a long document with many technical details. For the purpose of this writing I didn't talk about them. Keeping everything on ELI5 level was my goal.
+
+By cutting and compressing everything from the AAPCS64, I might've made some mistakes. If you think there is one, feel free to contact me. I wouldn't want to give wrong information.
+
+And lastly, thanks for reading.
+
+Enjoy Life ❤
