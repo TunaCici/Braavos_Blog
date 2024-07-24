@@ -5,8 +5,8 @@ tags:
 - c
 - assembly
 - eli5
-date: 2024-07-14T00:00:00Z
-header_image_alt: "TODO"
+date: 2024-07-25T00:00:00Z
+header_image_alt: "Procedure Call Standard - Arm 64-bit Architecture (AArch64)"
 ---
 
 Programming using high-level languages makes [a ton of stuff](https://en.wikipedia.org/wiki/Class_(computer_programming)) trivial. Your compiler/interpreter [abstracting lots stuff](https://en.wikipedia.org/wiki/Data_type) from you so that you can focus on what's important: getting shit done, efficiently. One of those abstractions is functions.
